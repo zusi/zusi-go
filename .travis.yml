@@ -1,0 +1,12 @@
+language: go
+
+go: 1.10.x
+
+install:
+  - go get -u -a golang.org/x/tools/cmd/stringer
+
+script:
+  - go generate ./...
+  - go run -v cmd/zusi-tcpgen/main.go
+  - go test -v -bench=. -cover -benchmem -race ./...
+  - go build -v cmd/zusi-testclient/main.go
