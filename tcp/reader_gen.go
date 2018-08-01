@@ -1547,6 +1547,10 @@ func readFahrpultWeiche(reader io.Reader) (*fahrpult.Weiche, error) {
 			msg.Grundstellung, err = ReadInt32(reader, length)
 		case 0x0004:
 			msg.Lage, err = ReadUint8(reader, length)
+		case 0x0005:
+			msg.Fahrtrichtung, err = ReadUint8(reader, length)
+		case 0x0006:
+			msg.UmlaufmodusStumpfbefahrung, err = ReadUint8(reader, length)
 		default:
 			fmt.Printf("unknown field %v with len %v", attribute, length)
 			_, err = ReadString(reader, length)

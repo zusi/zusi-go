@@ -385,10 +385,12 @@ type StatusWeichen struct {
 }
 
 type Weiche struct {
-	Bezeichnung   *string `zusi:"0001" json:"bezeichnung,omitempty"`
-	Bauart        *int32  `zusi:"0002" json:"bauart,omitempty"`
-	Grundstellung *int32  `zusi:"0003" json:"grundstellung,omitempty"`
-	Lage          *byte   `zusi:"0004" json:"lage,omitempty"`
+	Bezeichnung                *string `zusi:"0001" json:"bezeichnung,omitempty"`
+	Bauart                     *int32  `zusi:"0002" json:"bauart,omitempty"`
+	Grundstellung              *int32  `zusi:"0003" json:"grundstellung,omitempty"`
+	Lage                       *byte   `zusi:"0004" json:"lage,omitempty"`
+	Fahrtrichtung              *byte   `zusi:"0005" json:"fahrtrichtung,omitempty"`
+	UmlaufmodusStumpfbefahrung *byte   `zusi:"0006" json:"umlaufmodus_stumpfbefahrung,omitempty"`
 }
 
 // 5.3.3.4 Befehl 00 0B - DATA_OPERATION (Zusi → Client)

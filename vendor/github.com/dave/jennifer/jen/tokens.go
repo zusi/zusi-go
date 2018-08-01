@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+	"strings"
 )
 
 type tokenType string
@@ -39,19 +40,19 @@ func (t token) render(f *File, w io.Writer, s *Statement) error {
 	switch t.typ {
 	case literalToken:
 		var out string
-		switch v := t.content.(type) {
+		switch t.content.(type) {
 		case bool, string, int, complex128:
 			// default constant types can be left bare
 			out = fmt.Sprintf("%#v", t.content)
 		case float64:
-			// float is a special case because fmt package doesn't format correctly
-			if v == float64(int64(v)) {
-				// value is a whole number, so fmt package will omit the
-				// trailing ".0", so we add it.
-				// TODO: More testing needed for this. Corner cases?
-				out = fmt.Sprintf("%#v.0", t.content)
-			} else {
-				out = fmt.Sprintf("%#v", t.content)
+			out = fmt.Sprintf("%#v", t.content)
+			if !strings.Contains(out, ".") && !strings.Contains(out, "e") {
+				// If the formatted value is not in scientific notation, and does not have a dot, then
+				// we add ".0". Otherwise it will be interpreted as an int.
+				// See:
+				// https://github.com/dave/jennifer/issues/39
+				// https://github.com/golang/go/issues/26363
+				out += ".0"
 			}
 		case float32, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, uintptr:
 			// other built-in types need specific type info
