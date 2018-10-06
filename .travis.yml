@@ -1,12 +1,17 @@
 language: go
 
-go: 1.10.x
+go: 1.11.x
 
 install:
-  - go get -u -a golang.org/x/tools/cmd/stringer
+    - go get -u -a golang.org/x/tools/cmd/stringer
 
 script:
-  - go generate ./...
-  - go run -v cmd/zusi-tcpgen/main.go
-  - go test -v -bench=. -cover -benchmem -race ./...
-  - go build -v cmd/zusi-testclient/main.go
+    - GO111MODULE=on go generate ./...
+    - GO111MODULE=on go run -v cmd/zusi-tcpgen/main.go
+    - GO111MODULE=on go test -v -bench=. -cover -benchmem -race ./...
+    - GO111MODULE=on go build -v cmd/zusi-testclient/main.go
+
+cache:
+    directories:
+        - $HOME/.cache/go-build
+        - $HOME/gopath/pkg/mod
