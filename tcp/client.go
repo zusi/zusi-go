@@ -2,8 +2,8 @@ package tcp
 
 import (
 	"bufio"
-	log "github.com/sirupsen/logrus"
 	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp/message"
 	"io"
 	"net"
