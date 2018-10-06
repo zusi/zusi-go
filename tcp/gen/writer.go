@@ -2,6 +2,7 @@ package gen
 
 import (
 	"bytes"
+	"fmt"
 	"go/format"
 	"io"
 	"os"
@@ -11,7 +12,7 @@ import (
 )
 
 const (
-	PkgPath    = "github.com/schjan/zusi"
+	PkgPath    = "github.com/zusi/zusi-go"
 	TcpPath    = PkgPath + "/tcp"
 	GenPath    = TcpPath + "/gen"
 	CommonPath = TcpPath + "/common"
@@ -68,7 +69,7 @@ func WriteFile(messages []Message) error {
 		return err
 	}
 
-	writer, err := os.Create(path.Join(os.Getenv("GOPATH"), "src/github.com/zusi/zusi-go/tcp", "reader_gen.go"))
+	writer, err := os.Create(path.Join(os.Getenv("GOPATH"), fmt.Sprintf("src/%s", TcpPath), "reader_gen.go"))
 	if err != nil {
 		return err
 	}
