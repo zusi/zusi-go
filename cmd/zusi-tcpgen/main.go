@@ -1,7 +1,7 @@
 package main
 
 import (
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp/gen"
 	"github.com/zusi/zusi-go/tcp/message"
 	"reflect"

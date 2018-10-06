@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"path"
 	"reflect"
 )

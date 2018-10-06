@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp"
 	"github.com/zusi/zusi-go/tcp/fahrpult"
 	msg "github.com/zusi/zusi-go/tcp/message/fahrpult"
