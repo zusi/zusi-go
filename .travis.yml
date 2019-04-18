@@ -1,6 +1,6 @@
 language: go
 
-go: 1.11.x
+go: 1.x
 
 install:
     - go get -u -a golang.org/x/tools/cmd/stringer
