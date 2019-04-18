@@ -77,114 +77,114 @@ type DataFtd struct {
 	LmFahrtrichtungZurueck   *float32              `zusi:"0026" json:"lm_fahrtrichtung_zurueck,omitempty"` // Single: aus/an
 	LmFahrtrichtungM         *float32              `zusi:"0027" json:"lm_fahrtrichtung_m,omitempty"`       // Single: aus/an
 	//hintergrundbild                                 *float32              `zusi:"0028" json:"_hintergrundbild,omitempty"`                   // Single: Nicht sinnvoll zu verwenden
-	Motordrehmoment                                  *float32            `zusi:"0029" json:"motordrehmoment,omitempty"`                    // Single: Nm
-	MotorlastNormiert                                *float32            `zusi:"002A" json:"motorlast_normiert,omitempty"`                 // Single: 1 (0...1)
-	Tunnel                                           *float32            `zusi:"002B" json:"tunnel,omitempty"`                             // Single: aus/an
-	SchienenstossWeiche                              *float32            `zusi:"002C" json:"schienenstoss_weiche,omitempty"`               // Single: aus/an
-	Stahlbruecke                                     *float32            `zusi:"002D" json:"stahlbruecke,omitempty"`                       // Single: aus/an
-	Steinbruecke                                     *float32            `zusi:"002E" json:"steinbruecke,omitempty"`                       // Single: aus/an
-	XKoordinate                                      *float32            `zusi:"002F" json:"x_koordinate,omitempty"`                       // Single: m (Bez. Strecken-UTM-Punkt)
-	YKoordinate                                      *float32            `zusi:"0030" json:"y_koordinate,omitempty"`                       // Single: m (Bez. Strecken-UTM-Punkt)
-	ZKoordinate                                      *float32            `zusi:"0031" json:"z_koordinate,omitempty"`                       // Single: m
-	UTMReferenzpunktXkm                              *float32            `zusi:"0032" json:"utm_referenzpunkt_xkm,omitempty"`              // Single: km
-	UTMReferenzpunktYkm                              *float32            `zusi:"0033" json:"utm_referenzpunkt_ykm,omitempty"`              // Single: km
-	UTMZone                                          *float32            `zusi:"0034" json:"utm_zone,omitempty"`                           // Single
-	UTMZone2                                         *float32            `zusi:"0035" json:"utm_zone_2,omitempty"`                         // Single
-	AFBAn                                            *float32            `zusi:"0036" json:"afb_an,omitempty"`                             // Single: aus/an
-	Individuell01                                    *float32            `zusi:"0037" json:"individuell_01,omitempty"`                     // Single
-	Individuell02                                    *float32            `zusi:"0038" json:"individuell_02,omitempty"`                     // Single
-	Individuell03                                    *float32            `zusi:"0039" json:"individuell_03,omitempty"`                     // Single
-	Individuell04                                    *float32            `zusi:"003A" json:"individuell_04,omitempty"`                     // Single
-	Individuell05                                    *float32            `zusi:"003B" json:"individuell_05,omitempty"`                     // Single
-	Individuell06                                    *float32            `zusi:"003C" json:"individuell_06,omitempty"`                     // Single
-	Individuell07                                    *float32            `zusi:"003D" json:"individuell_07,omitempty"`                     // Single
-	Individuell08                                    *float32            `zusi:"003E" json:"individuell_08,omitempty"`                     // Single
-	Individuell09                                    *float32            `zusi:"003F" json:"individuell_09,omitempty"`                     // Single
-	Individuell10                                    *float32            `zusi:"0040" json:"individuell_10,omitempty"`                     // Single
-	Individuell11                                    *float32            `zusi:"0041" json:"individuell_11,omitempty"`                     // Single
-	Individuell12                                    *float32            `zusi:"0042" json:"individuell_12,omitempty"`                     // Single
-	Individuell13                                    *float32            `zusi:"0043" json:"individuell_13,omitempty"`                     // Single
-	Individuell14                                    *float32            `zusi:"0044" json:"individuell_14,omitempty"`                     // Single
-	Individuell15                                    *float32            `zusi:"0045" json:"individuell_15,omitempty"`                     // Single
-	Individuell16                                    *float32            `zusi:"0046" json:"individuell_16,omitempty"`                     // Single
-	Individuell17                                    *float32            `zusi:"0047" json:"individuell_17,omitempty"`                     // Single
-	Individuell18                                    *float32            `zusi:"0048" json:"individuell_18,omitempty"`                     // Single
-	Individuell19                                    *float32            `zusi:"0049" json:"individuell_19,omitempty"`                     // Single
-	Individuell20                                    *float32            `zusi:"004A" json:"individuell_20,omitempty"`                     // Single
-	Datum                                            *float32            `zusi:"004B" json:"datum,omitempty"`                              // Single (Tage mit 0 = 30.12.1899)
-	Gleiskruemmung                                   *float32            `zusi:"004C" json:"gleiskruemmung,omitempty"`                     // Single 1000/m
-	Streckenhoechstgeschwindigkeit                   *float32            `zusi:"004D" json:"streckenhoechstgeschwindigkeit,omitempty"`     // Single: m/s
-	ZugkraftvorschlagAutopilot                       *float32            `zusi:"004E" json:"zugkraftvorschlag_autopilot,omitempty"`        // Single: N
-	BeschleunigungX                                  *float32            `zusi:"004F" json:"beschleunigung_x,omitempty"`                   // Single: m/s^2
-	BeschleunigungY                                  *float32            `zusi:"0050" json:"beschleunigung_y,omitempty"`                   // Single: m/s^2
-	BeschleunigungZ                                  *float32            `zusi:"0051" json:"beschleunigung_z,omitempty"`                   // Single: m/s^2
-	DrehbeschleunigungXAchse                         *float32            `zusi:"0052" json:"drehbeschleunigung_x_achse,omitempty"`         // Single: rad/s^2
-	DrehbeschleunigungYAchse                         *float32            `zusi:"0053" json:"drehbeschleunigung_y_achse,omitempty"`         // Single: rad/s^2
-	DrehbeschleunigungZAchse                         *float32            `zusi:"0054" json:"drehbeschleunigung_z_achse,omitempty"`         // Single: rad/s^2
-	Stromabnehmer                                    *float32            `zusi:"0055" json:"stromabnehmer,omitempty"`                      // Single: 2x4 bit (4bit: 1 fuer SA=oben; 4 bit: 1 fuer SA hebt sich gerade)
-	LmFederspeicherbremse                            *float32            `zusi:"0056" json:"lm_federspeicherbremse,omitempty"`             // Single: aus/an
-	ZustandFederspeicherbremse                       *float32            `zusi:"0057" json:"zustand_federspeicherbremse,omitempty"`        // Single -1, 0, 1, 2 (nicht vorhanden, aus, an, blinkend)
-	SteuerwagenLmGetriebe                            *float32            `zusi:"0058" json:"steuerwagen_lm_getriebe,omitempty"`            // Single: aus/an
-	SteuerwagenLmSchleudern                          *float32            `zusi:"0059" json:"steuerwagen_lm_schleudern,omitempty"`          // Single: aus/an
-	SteuerwagenLmGleiten                             *float32            `zusi:"005A" json:"steuerwagen_lm_gleiten,omitempty"`             // Single: aus/an
-	SteuerwagenLmHBremse                             *float32            `zusi:"005B" json:"steuerwagen_lm_h_bremse,omitempty"`            // Single: aus/an
-	SteuerwagenLmRBremse                             *float32            `zusi:"005C" json:"steuerwagen_lm_r_bremse,omitempty"`            // Single: aus/an
-	SteuerwagenLmDrehzahlverstellung                 *float32            `zusi:"005D" json:"steuerwagen_lm_drehzahlverstellung,omitempty"` // Single: aus/an
-	DruckZweitbehaelter                              *float32            `zusi:"005E" json:"druck_zweitbehaelter,omitempty"`               // Single: bar
-	GeschwindigkeitAbsolut                           *float32            `zusi:"005F" json:"geschwindigkeit_absolut,omitempty"`            // Single: m/s
-	ZugIstEntgleist                                  *float32            `zusi:"0060" json:"zug_ist_entgleist,omitempty"`                  // Single: aus/an
-	KilometrierungZugspitze                          *float32            `zusi:"0061" json:"kilometrierung_zugspitze,omitempty"`           // Single: km
-	Motorstrom                                       *float32            `zusi:"0062" json:"motorstrom,omitempty"`                         // Single: A
-	Motorspannung                                    *float32            `zusi:"0063" json:"motorspannung,omitempty"`                      // Single: V
-	StatusSifa                                       *StatusSifa         `zusi:"0064" json:"status_sifa,omitempty"`
-	StatusZugsicherung                               *StatusZugsicherung `zusi:"0065" json:"status_zugsicherung,omitempty"`
-	StatusTuersystem                                 *StatusTuersystem   `zusi:"0066" json:"status_tuersystem,omitempty"`
-	Individuell21                                    *float32            `zusi:"0067" json:"individuell_21,omitempty"`                          // Single
-	Individuell22                                    *float32            `zusi:"0068" json:"individuell_22,omitempty"`                          // Single
-	Individuell23                                    *float32            `zusi:"0069" json:"individuell_23,omitempty"`                          // Single
-	Individuell24                                    *float32            `zusi:"006A" json:"individuell_24,omitempty"`                          // Single
-	Individuell25                                    *float32            `zusi:"006B" json:"individuell_25,omitempty"`                          // Single
-	Individuell26                                    *float32            `zusi:"006C" json:"individuell_26,omitempty"`                          // Single
-	Individuell27                                    *float32            `zusi:"006D" json:"individuell_27,omitempty"`                          // Single
-	Individuell28                                    *float32            `zusi:"006E" json:"individuell_28,omitempty"`                          // Single
-	Individuell29                                    *float32            `zusi:"006F" json:"individuell_29,omitempty"`                          // Single
-	Individuell30                                    *float32            `zusi:"0070" json:"individuell_30,omitempty"`                          // Single
-	Individuell31                                    *float32            `zusi:"0071" json:"individuell_31,omitempty"`                          // Single
-	Individuell32                                    *float32            `zusi:"0072" json:"individuell_32,omitempty"`                          // Single
-	Individuell33                                    *float32            `zusi:"0073" json:"individuell_33,omitempty"`                          // Single
-	Individuell34                                    *float32            `zusi:"0074" json:"individuell_34,omitempty"`                          // Single
-	Individuell35                                    *float32            `zusi:"0075" json:"individuell_35,omitempty"`                          // Single
-	Individuell36                                    *float32            `zusi:"0076" json:"individuell_36,omitempty"`                          // Single
-	Individuell37                                    *float32            `zusi:"0077" json:"individuell_37,omitempty"`                          // Single
-	Individuell38                                    *float32            `zusi:"0078" json:"individuell_38,omitempty"`                          // Single
-	Individuell39                                    *float32            `zusi:"0079" json:"individuell_39,omitempty"`                          // Single
-	Individuell40                                    *float32            `zusi:"007A" json:"individuell_40,omitempty"`                          // Single
-	SteuerwagenLuefterAn                             *float32            `zusi:"007B" json:"steuerwagen_luefter_an,omitempty"`                  // Single: aus/an
-	SteuerwagenZugkraftGesamt                        *float32            `zusi:"007C" json:"steuerwagen_zugkraft_gesamt,omitempty"`             // Single: N
-	SteuerwagenZugraftProAchse                       *float32            `zusi:"007D" json:"steuerwagen_zugraft_pro_achse,omitempty"`           // Single: N
-	SteuerwagenZugkraftSollGesamt                    *float32            `zusi:"007E" json:"steuerwagen_zugkraft_soll_gesamt,omitempty"`        // Single: N
-	SteuerwagenZugraftSollProAchse                   *float32            `zusi:"007F" json:"steuerwagen_zugraft_soll_pro_achse,omitempty"`      // Single: N
-	SteuerwagenOberstrom                             *float32            `zusi:"0080" json:"steuerwagen_oberstrom,omitempty"`                   // Single: N
-	SteuerwagenFahrleitungsspannung                  *float32            `zusi:"0081" json:"steuerwagen_fahrleitungsspannung,omitempty"`        // Single V
-	SteuerwagenMotordrehzahl                         *float32            `zusi:"0082" json:"steuerwagen_motordrehzahl,omitempty"`               // Single 1/min
-	SteuerwagenHauptschalter                         *float32            `zusi:"0083" json:"steuerwagen_hauptschalter,omitempty"`               // Single aus/an
-	SteuerwagenTrennschuetz                          *float32            `zusi:"0084" json:"steuerwagen_trennschuetz,omitempty"`                // Single: aus/an
-	SteuerwagenFahrstufe                             *float32            `zusi:"0085" json:"steuerwagen_fahrstufe,omitempty"`                   // Single: 1
-	SteuerwagenMotordrehmoment                       *float32            `zusi:"0086" json:"steuerwagen_motordrehmoment,omitempty"`             // Single: Nm
-	SteuerwagenMotorlastNormiert                     *float32            `zusi:"0087" json:"steuerwagen_motorlast_normiert,omitempty"`          // Single: 1 (0...1)
-	SteuerwagenStromabnehmer                         *float32            `zusi:"0088" json:"steuerwagen_stromabnehmer,omitempty"`               // Single
-	SteuerwagenMotorstrom                            *float32            `zusi:"0089" json:"steuerwagen_motorstrom,omitempty"`                  // Single: A
-	SteuerwagenMotorspannung                         *float32            `zusi:"008A" json:"steuerwagen_motorspannung,omitempty"`               // Single: V
-	GeschwindigkeitAbsolutInklSchleudern             *float32            `zusi:"008B" json:"geschwindigkeit_absolut_inkl_schleudern,omitempty"` // Single: m/s
-	BatteriehauptschalterAus                         *float32            `zusi:"008C" json:"batteriehauptschalter_aus,omitempty"`               // Single: aus/an
-	StatusFahrzeug                                   *StatusFahrzeug     `zusi:"008D" json:"status_fahrzeug,omitempty"`
-	StatusZugverband                                 *StatusZugverband   `zusi:"008E" json:"status_zugverband,omitempty"`
-	Bremsprobenfunktion                              *float32            `zusi:"008F" json:"bremsprobenfunktion,omitempty"`                                 // Single: 0 (aus, >0 aktiv)
-	ZugUndBremsGesamtkraftSollNormiert               *float32            `zusi:"0090" json:"zug_und_brems_gesamtkraft_soll_normiert,omitempty"`             // Single: 1 ((0...1) normiert auf aktuelle Fmax
-	SteuerwagenZugUndBremsGesamtkraftSollNormiert    *float32            `zusi:"0091" json:"steuerwagen_zug_und_brems_gesamtkraft_soll_normiert,omitempty"` // Single: 1 ((0...1) normiert auf aktuelle Fmax
-	StatusWeichen                                    *StatusWeichen      `zusi:"0092" json:"status_weichen,omitempty"`
-	ZugUndBremsGesamtkraftAbsolutNormiert            *float32            `zusi:"0093" json:"zug_und_brems_gesamtkraft_absolut_normiert,omitempty"`             // Single: 1 ((0...1) normiert auf aktuelle Fmax
-	SteuerwagenZugUndBremsGesamtkraftAbsolutNormiert *float32            `zusi:"0094" json:"steuerwagen_zug_und_brems_gesamtkraft_absolut_normiert,omitempty"` // Single: 1 ((0...1) normiert auf aktuelle Fmax
+	Motordrehmoment                                  *float32                `zusi:"0029" json:"motordrehmoment,omitempty"`                    // Single: Nm
+	MotorlastNormiert                                *float32                `zusi:"002A" json:"motorlast_normiert,omitempty"`                 // Single: 1 (0...1)
+	Tunnel                                           *float32                `zusi:"002B" json:"tunnel,omitempty"`                             // Single: aus/an
+	SchienenstossWeiche                              *float32                `zusi:"002C" json:"schienenstoss_weiche,omitempty"`               // Single: aus/an
+	Stahlbruecke                                     *float32                `zusi:"002D" json:"stahlbruecke,omitempty"`                       // Single: aus/an
+	Steinbruecke                                     *float32                `zusi:"002E" json:"steinbruecke,omitempty"`                       // Single: aus/an
+	XKoordinate                                      *float32                `zusi:"002F" json:"x_koordinate,omitempty"`                       // Single: m (Bez. Strecken-UTM-Punkt)
+	YKoordinate                                      *float32                `zusi:"0030" json:"y_koordinate,omitempty"`                       // Single: m (Bez. Strecken-UTM-Punkt)
+	ZKoordinate                                      *float32                `zusi:"0031" json:"z_koordinate,omitempty"`                       // Single: m
+	UTMReferenzpunktXkm                              *float32                `zusi:"0032" json:"utm_referenzpunkt_xkm,omitempty"`              // Single: km
+	UTMReferenzpunktYkm                              *float32                `zusi:"0033" json:"utm_referenzpunkt_ykm,omitempty"`              // Single: km
+	UTMZone                                          *float32                `zusi:"0034" json:"utm_zone,omitempty"`                           // Single
+	UTMZone2                                         *float32                `zusi:"0035" json:"utm_zone_2,omitempty"`                         // Single
+	AFBAn                                            *float32                `zusi:"0036" json:"afb_an,omitempty"`                             // Single: aus/an
+	Individuell01                                    *float32                `zusi:"0037" json:"individuell_01,omitempty"`                     // Single
+	Individuell02                                    *float32                `zusi:"0038" json:"individuell_02,omitempty"`                     // Single
+	Individuell03                                    *float32                `zusi:"0039" json:"individuell_03,omitempty"`                     // Single
+	Individuell04                                    *float32                `zusi:"003A" json:"individuell_04,omitempty"`                     // Single
+	Individuell05                                    *float32                `zusi:"003B" json:"individuell_05,omitempty"`                     // Single
+	Individuell06                                    *float32                `zusi:"003C" json:"individuell_06,omitempty"`                     // Single
+	Individuell07                                    *float32                `zusi:"003D" json:"individuell_07,omitempty"`                     // Single
+	Individuell08                                    *float32                `zusi:"003E" json:"individuell_08,omitempty"`                     // Single
+	Individuell09                                    *float32                `zusi:"003F" json:"individuell_09,omitempty"`                     // Single
+	Individuell10                                    *float32                `zusi:"0040" json:"individuell_10,omitempty"`                     // Single
+	Individuell11                                    *float32                `zusi:"0041" json:"individuell_11,omitempty"`                     // Single
+	Individuell12                                    *float32                `zusi:"0042" json:"individuell_12,omitempty"`                     // Single
+	Individuell13                                    *float32                `zusi:"0043" json:"individuell_13,omitempty"`                     // Single
+	Individuell14                                    *float32                `zusi:"0044" json:"individuell_14,omitempty"`                     // Single
+	Individuell15                                    *float32                `zusi:"0045" json:"individuell_15,omitempty"`                     // Single
+	Individuell16                                    *float32                `zusi:"0046" json:"individuell_16,omitempty"`                     // Single
+	Individuell17                                    *float32                `zusi:"0047" json:"individuell_17,omitempty"`                     // Single
+	Individuell18                                    *float32                `zusi:"0048" json:"individuell_18,omitempty"`                     // Single
+	Individuell19                                    *float32                `zusi:"0049" json:"individuell_19,omitempty"`                     // Single
+	Individuell20                                    *float32                `zusi:"004A" json:"individuell_20,omitempty"`                     // Single
+	Datum                                            *float32                `zusi:"004B" json:"datum,omitempty"`                              // Single (Tage mit 0 = 30.12.1899)
+	Gleiskruemmung                                   *float32                `zusi:"004C" json:"gleiskruemmung,omitempty"`                     // Single 1000/m
+	Streckenhoechstgeschwindigkeit                   *float32                `zusi:"004D" json:"streckenhoechstgeschwindigkeit,omitempty"`     // Single: m/s
+	ZugkraftvorschlagAutopilot                       *float32                `zusi:"004E" json:"zugkraftvorschlag_autopilot,omitempty"`        // Single: N
+	BeschleunigungX                                  *float32                `zusi:"004F" json:"beschleunigung_x,omitempty"`                   // Single: m/s^2
+	BeschleunigungY                                  *float32                `zusi:"0050" json:"beschleunigung_y,omitempty"`                   // Single: m/s^2
+	BeschleunigungZ                                  *float32                `zusi:"0051" json:"beschleunigung_z,omitempty"`                   // Single: m/s^2
+	DrehbeschleunigungXAchse                         *float32                `zusi:"0052" json:"drehbeschleunigung_x_achse,omitempty"`         // Single: rad/s^2
+	DrehbeschleunigungYAchse                         *float32                `zusi:"0053" json:"drehbeschleunigung_y_achse,omitempty"`         // Single: rad/s^2
+	DrehbeschleunigungZAchse                         *float32                `zusi:"0054" json:"drehbeschleunigung_z_achse,omitempty"`         // Single: rad/s^2
+	Stromabnehmer                                    *float32                `zusi:"0055" json:"stromabnehmer,omitempty"`                      // Single: 2x4 bit (4bit: 1 fuer SA=oben; 4 bit: 1 fuer SA hebt sich gerade)
+	LmFederspeicherbremse                            *float32                `zusi:"0056" json:"lm_federspeicherbremse,omitempty"`             // Single: aus/an
+	ZustandFederspeicherbremse                       *float32                `zusi:"0057" json:"zustand_federspeicherbremse,omitempty"`        // Single -1, 0, 1, 2 (nicht vorhanden, aus, an, blinkend)
+	SteuerwagenLmGetriebe                            *float32                `zusi:"0058" json:"steuerwagen_lm_getriebe,omitempty"`            // Single: aus/an
+	SteuerwagenLmSchleudern                          *float32                `zusi:"0059" json:"steuerwagen_lm_schleudern,omitempty"`          // Single: aus/an
+	SteuerwagenLmGleiten                             *float32                `zusi:"005A" json:"steuerwagen_lm_gleiten,omitempty"`             // Single: aus/an
+	SteuerwagenLmHBremse                             *float32                `zusi:"005B" json:"steuerwagen_lm_h_bremse,omitempty"`            // Single: aus/an
+	SteuerwagenLmRBremse                             *float32                `zusi:"005C" json:"steuerwagen_lm_r_bremse,omitempty"`            // Single: aus/an
+	SteuerwagenLmDrehzahlverstellung                 *float32                `zusi:"005D" json:"steuerwagen_lm_drehzahlverstellung,omitempty"` // Single: aus/an
+	DruckZweitbehaelter                              *float32                `zusi:"005E" json:"druck_zweitbehaelter,omitempty"`               // Single: bar
+	GeschwindigkeitAbsolut                           *float32                `zusi:"005F" json:"geschwindigkeit_absolut,omitempty"`            // Single: m/s
+	ZugIstEntgleist                                  *float32                `zusi:"0060" json:"zug_ist_entgleist,omitempty"`                  // Single: aus/an
+	KilometrierungZugspitze                          *float32                `zusi:"0061" json:"kilometrierung_zugspitze,omitempty"`           // Single: km
+	Motorstrom                                       *float32                `zusi:"0062" json:"motorstrom,omitempty"`                         // Single: A
+	Motorspannung                                    *float32                `zusi:"0063" json:"motorspannung,omitempty"`                      // Single: V
+	StatusSifa                                       *StatusSifa             `zusi:"0064" json:"status_sifa,omitempty"`
+	StatusZugsicherung                               *StatusZugbeeinflussung `zusi:"0065" json:"status_zugsicherung,omitempty"`
+	StatusTuersystem                                 *StatusTuersystem       `zusi:"0066" json:"status_tuersystem,omitempty"`
+	Individuell21                                    *float32                `zusi:"0067" json:"individuell_21,omitempty"`                          // Single
+	Individuell22                                    *float32                `zusi:"0068" json:"individuell_22,omitempty"`                          // Single
+	Individuell23                                    *float32                `zusi:"0069" json:"individuell_23,omitempty"`                          // Single
+	Individuell24                                    *float32                `zusi:"006A" json:"individuell_24,omitempty"`                          // Single
+	Individuell25                                    *float32                `zusi:"006B" json:"individuell_25,omitempty"`                          // Single
+	Individuell26                                    *float32                `zusi:"006C" json:"individuell_26,omitempty"`                          // Single
+	Individuell27                                    *float32                `zusi:"006D" json:"individuell_27,omitempty"`                          // Single
+	Individuell28                                    *float32                `zusi:"006E" json:"individuell_28,omitempty"`                          // Single
+	Individuell29                                    *float32                `zusi:"006F" json:"individuell_29,omitempty"`                          // Single
+	Individuell30                                    *float32                `zusi:"0070" json:"individuell_30,omitempty"`                          // Single
+	Individuell31                                    *float32                `zusi:"0071" json:"individuell_31,omitempty"`                          // Single
+	Individuell32                                    *float32                `zusi:"0072" json:"individuell_32,omitempty"`                          // Single
+	Individuell33                                    *float32                `zusi:"0073" json:"individuell_33,omitempty"`                          // Single
+	Individuell34                                    *float32                `zusi:"0074" json:"individuell_34,omitempty"`                          // Single
+	Individuell35                                    *float32                `zusi:"0075" json:"individuell_35,omitempty"`                          // Single
+	Individuell36                                    *float32                `zusi:"0076" json:"individuell_36,omitempty"`                          // Single
+	Individuell37                                    *float32                `zusi:"0077" json:"individuell_37,omitempty"`                          // Single
+	Individuell38                                    *float32                `zusi:"0078" json:"individuell_38,omitempty"`                          // Single
+	Individuell39                                    *float32                `zusi:"0079" json:"individuell_39,omitempty"`                          // Single
+	Individuell40                                    *float32                `zusi:"007A" json:"individuell_40,omitempty"`                          // Single
+	SteuerwagenLuefterAn                             *float32                `zusi:"007B" json:"steuerwagen_luefter_an,omitempty"`                  // Single: aus/an
+	SteuerwagenZugkraftGesamt                        *float32                `zusi:"007C" json:"steuerwagen_zugkraft_gesamt,omitempty"`             // Single: N
+	SteuerwagenZugraftProAchse                       *float32                `zusi:"007D" json:"steuerwagen_zugraft_pro_achse,omitempty"`           // Single: N
+	SteuerwagenZugkraftSollGesamt                    *float32                `zusi:"007E" json:"steuerwagen_zugkraft_soll_gesamt,omitempty"`        // Single: N
+	SteuerwagenZugraftSollProAchse                   *float32                `zusi:"007F" json:"steuerwagen_zugraft_soll_pro_achse,omitempty"`      // Single: N
+	SteuerwagenOberstrom                             *float32                `zusi:"0080" json:"steuerwagen_oberstrom,omitempty"`                   // Single: N
+	SteuerwagenFahrleitungsspannung                  *float32                `zusi:"0081" json:"steuerwagen_fahrleitungsspannung,omitempty"`        // Single V
+	SteuerwagenMotordrehzahl                         *float32                `zusi:"0082" json:"steuerwagen_motordrehzahl,omitempty"`               // Single 1/min
+	SteuerwagenHauptschalter                         *float32                `zusi:"0083" json:"steuerwagen_hauptschalter,omitempty"`               // Single aus/an
+	SteuerwagenTrennschuetz                          *float32                `zusi:"0084" json:"steuerwagen_trennschuetz,omitempty"`                // Single: aus/an
+	SteuerwagenFahrstufe                             *float32                `zusi:"0085" json:"steuerwagen_fahrstufe,omitempty"`                   // Single: 1
+	SteuerwagenMotordrehmoment                       *float32                `zusi:"0086" json:"steuerwagen_motordrehmoment,omitempty"`             // Single: Nm
+	SteuerwagenMotorlastNormiert                     *float32                `zusi:"0087" json:"steuerwagen_motorlast_normiert,omitempty"`          // Single: 1 (0...1)
+	SteuerwagenStromabnehmer                         *float32                `zusi:"0088" json:"steuerwagen_stromabnehmer,omitempty"`               // Single
+	SteuerwagenMotorstrom                            *float32                `zusi:"0089" json:"steuerwagen_motorstrom,omitempty"`                  // Single: A
+	SteuerwagenMotorspannung                         *float32                `zusi:"008A" json:"steuerwagen_motorspannung,omitempty"`               // Single: V
+	GeschwindigkeitAbsolutInklSchleudern             *float32                `zusi:"008B" json:"geschwindigkeit_absolut_inkl_schleudern,omitempty"` // Single: m/s
+	BatteriehauptschalterAus                         *float32                `zusi:"008C" json:"batteriehauptschalter_aus,omitempty"`               // Single: aus/an
+	StatusFahrzeug                                   *StatusFahrzeug         `zusi:"008D" json:"status_fahrzeug,omitempty"`
+	StatusZugverband                                 *StatusZugverband       `zusi:"008E" json:"status_zugverband,omitempty"`
+	Bremsprobenfunktion                              *float32                `zusi:"008F" json:"bremsprobenfunktion,omitempty"`                                 // Single: 0 (aus, >0 aktiv)
+	ZugUndBremsGesamtkraftSollNormiert               *float32                `zusi:"0090" json:"zug_und_brems_gesamtkraft_soll_normiert,omitempty"`             // Single: 1 ((0...1) normiert auf aktuelle Fmax
+	SteuerwagenZugUndBremsGesamtkraftSollNormiert    *float32                `zusi:"0091" json:"steuerwagen_zug_und_brems_gesamtkraft_soll_normiert,omitempty"` // Single: 1 ((0...1) normiert auf aktuelle Fmax
+	StatusWeichen                                    *StatusWeichen          `zusi:"0092" json:"status_weichen,omitempty"`
+	ZugUndBremsGesamtkraftAbsolutNormiert            *float32                `zusi:"0093" json:"zug_und_brems_gesamtkraft_absolut_normiert,omitempty"`             // Single: 1 ((0...1) normiert auf aktuelle Fmax
+	SteuerwagenZugUndBremsGesamtkraftAbsolutNormiert *float32                `zusi:"0094" json:"steuerwagen_zug_und_brems_gesamtkraft_absolut_normiert,omitempty"` // Single: 1 ((0...1) normiert auf aktuelle Fmax
 }
 
 // 5.3.3.3.2
@@ -206,8 +206,8 @@ type StatusSifa struct {
 	SifaLuftabsperrhahn *byte   `zusi:"0006" json:"sifa_luftabsperrhahn,omitempty"`
 }
 
-// 5.3.3.3.4 Status Zugsicherung
-type StatusZugsicherung struct {
+// 5.3.3.3.4 Status Zugbeeinflussung
+type StatusZugbeeinflussung struct {
 	Bauart              *string              `zusi:"0001" json:"bauart,omitempty"`
 	IndusiEinstellungen *IndusiEinstellungen `zusi:"0002" json:"indusi_einstellungen,omitempty"`
 	IndusiZustand       *IndusiZustand       `zusi:"0003" json:"indusi_zustand,omitempty"`
@@ -352,6 +352,7 @@ type StatusTuersystem struct {
 	ZentralesOeffnenRechts       *byte   `zusi:"000F" json:"zentrales_oeffnen_rechts,omitempty"`
 	StatusZentralesOeffnenLinks  *byte   `zusi:"0010" json:"status_zentrales_oeffnen_links,omitempty"`  // 0: Aus 1: Dauerlicht 2: Blinkend
 	StatusZentralesOeffnenRechts *byte   `zusi:"0011" json:"status_zentrales_oeffnen_rechts,omitempty"` // 0: Aus 1: Dauerlicht 2: Blinkend
+	LmGruenschleife              *byte   `zusi:"0012" json:"lm_gruenschleife,omitempty"`                // 1: an
 }
 
 // 5.3.3.3.6

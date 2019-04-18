@@ -2,7 +2,7 @@ package gen
 
 import (
 	"bytes"
-	"fmt"
+	log "github.com/sirupsen/logrus"
 	"go/format"
 	"io"
 	"os"
@@ -46,7 +46,7 @@ func generateHeader(msgs []Message, writer io.Writer) error {
 
 	_, err := t.Parse(headerTemplate())
 	if err != nil {
-
+		return err
 	}
 
 	imports := map[string]struct{}{}
@@ -60,7 +60,7 @@ func generateHeader(msgs []Message, writer io.Writer) error {
 	return t.Execute(writer, he)
 }
 
-func WriteFile(messages []Message) error {
+func WriteFile(messages []Message, rootPath string) error {
 	outBuffer := &bytes.Buffer{}
 	err := GenerateReaderFile(messages, outBuffer)
 
@@ -69,7 +69,8 @@ func WriteFile(messages []Message) error {
 		return err
 	}
 
-	writer, err := os.Create(path.Join(os.Getenv("GOPATH"), fmt.Sprintf("src/%s", TcpPath), "reader_gen.go"))
+	fileName := path.Join(rootPath, "tcp", "reader_gen.go")
+	writer, err := os.Create(fileName)
 	if err != nil {
 		return err
 	}
@@ -80,14 +81,27 @@ func WriteFile(messages []Message) error {
 		return err
 	}
 
-	return writer.Close()
+	err = writer.Close()
+	if err != nil {
+		return err
+	}
+
+	log.WithField("filename", fileName).Info("successfully wrote file")
+
+	return nil
 }
 
 func GenerateReaderFile(messages []Message, writer io.Writer) error {
-	generateHeader(messages, writer)
+	err := generateHeader(messages, writer)
+	if err != nil {
+		return err
+	}
 
 	for _, v := range messages {
-		Generate(v, writer)
+		err = Generate(v, writer)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp/gen"
 	"github.com/zusi/zusi-go/tcp/message"
@@ -8,7 +9,11 @@ import (
 	"sort"
 )
 
+var rootPath = flag.String("root", "", "root path of repository")
+
 func main() {
+	flag.Parse()
+
 	root := message.Message{}
 
 	res := gen.FindStructsToReflect(root)
@@ -25,7 +30,7 @@ func main() {
 
 	sort.Sort(Messages(messages))
 
-	err := gen.WriteFile(messages)
+	err := gen.WriteFile(messages, *rootPath)
 	if err != nil {
 		log.WithError(err).Error()
 	}

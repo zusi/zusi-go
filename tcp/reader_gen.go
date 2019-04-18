@@ -454,7 +454,7 @@ func readFahrpultDataFtd(reader io.Reader) (*fahrpult.DataFtd, error) {
 		case 0x0064:
 			msg.StatusSifa, err = readFahrpultStatusSifa(reader)
 		case 0x0065:
-			msg.StatusZugsicherung, err = readFahrpultStatusZugsicherung(reader)
+			msg.StatusZugsicherung, err = readFahrpultStatusZugbeeinflussung(reader)
 		case 0x0066:
 			msg.StatusTuersystem, err = readFahrpultStatusTuersystem(reader)
 		case 0x0067:
@@ -1389,6 +1389,8 @@ func readFahrpultStatusTuersystem(reader io.Reader) (*fahrpult.StatusTuersystem,
 			msg.StatusZentralesOeffnenLinks, err = ReadUint8(reader, length)
 		case 0x0011:
 			msg.StatusZentralesOeffnenRechts, err = ReadUint8(reader, length)
+		case 0x0012:
+			msg.LmGruenschleife, err = ReadUint8(reader, length)
 		default:
 			fmt.Printf("unknown field %v with len %v", attribute, length)
 			_, err = ReadString(reader, length)
@@ -1430,8 +1432,8 @@ func readFahrpultStatusWeichen(reader io.Reader) (*fahrpult.StatusWeichen, error
 	}
 }
 
-func readFahrpultStatusZugsicherung(reader io.Reader) (*fahrpult.StatusZugsicherung, error) {
-	msg := fahrpult.StatusZugsicherung{}
+func readFahrpultStatusZugbeeinflussung(reader io.Reader) (*fahrpult.StatusZugbeeinflussung, error) {
+	msg := fahrpult.StatusZugbeeinflussung{}
 
 	for {
 		length, attribute, err := ReadHeader(reader)
