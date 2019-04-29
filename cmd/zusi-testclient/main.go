@@ -23,25 +23,27 @@ func main() {
 	fp := fahrpult.New()
 	err := fp.Connect(*zusiUri)
 	if err != nil {
-		log.Error(err)
+		log.Fatal(err)
 		return
 	}
+	defer fp.Close()
 
 	go receiveLogger(fp.Client)
 
-	fp.SendFp(msg.FahrpultMessage{
+	err = fp.SendFp(msg.FahrpultMessage{
 		NeededData: &msg.NeededDataMessage{
 			Fuehrerstandsanzeigen: &msg.Fuehrerstandsanzeigen{
 				Anzeigen: []uint16{0x0001},
 			},
 		},
 	})
+	if err != nil {
+		log.Warn(err)
+	}
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-
-	defer fp.Close()
 }
 
 func receiveLogger(client *tcp.Client) {
