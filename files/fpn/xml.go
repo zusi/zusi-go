@@ -2,7 +2,7 @@ package fpn
 
 import "encoding/xml"
 
-type Fpn struct {
+type File struct {
 	XMLName xml.Name `xml:"Zusi"`
 	Text    string   `xml:",chardata"`
 	Info    struct {

@@ -2,7 +2,7 @@ package ls3
 
 import "encoding/xml"
 
-type Ls3 struct {
+type File struct {
 	XMLName xml.Name `xml:"Zusi"`
 	Text    string   `xml:",chardata"`
 	Info    struct {

@@ -3,7 +3,7 @@ package trn
 import "encoding/xml"
 
 // .trn
-type Trn struct {
+type File struct {
 	XMLName xml.Name `xml:"Zusi"`
 	Text    string   `xml:",chardata"`
 	Info    struct {
@@ -76,7 +76,7 @@ type Trn struct {
 }
 
 // .timetable.xml
-type Timetable struct {
+type TimetableFile struct {
 	XMLName xml.Name `xml:"Zusi"`
 	Text    string   `xml:",chardata"`
 	Info    struct {
