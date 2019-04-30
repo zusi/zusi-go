@@ -33,6 +33,10 @@ func Read(root, filename string) ([]byte, error) {
 }
 
 func findFile(root, filename string) (string, error) {
+	if runtime.GOOS == "windows" {
+		return filepath.Join(root, filename), nil
+	}
+
 	resolvedPath := ""
 	path := strings.Split(filename, string(filepath.Separator))
 
