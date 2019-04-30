@@ -2,7 +2,7 @@ package st3
 
 import "encoding/xml"
 
-type St3 struct {
+type File struct {
 	XMLName xml.Name `xml:"Zusi"`
 	Text    string   `xml:",chardata"`
 	Info    struct {
@@ -153,7 +153,7 @@ type St3 struct {
 					Beschr string `xml:"Beschr,attr"`
 					Wert   string `xml:"Wert,attr"`
 				} `xml:"Ereignis"`
-				Signal struct {
+				Signal *struct {
 					Text               string `xml:",chardata"`
 					SignalTyp          string `xml:"SignalTyp,attr"`
 					BoundingR          string `xml:"BoundingR,attr"`
@@ -256,7 +256,7 @@ type St3 struct {
 					Beschr string `xml:"Beschr,attr"`
 					Wert   string `xml:"Wert,attr"`
 				} `xml:"Ereignis"`
-				Signal struct {
+				Signal *struct {
 					Text               string `xml:",chardata"`
 					NameBetriebsstelle string `xml:"NameBetriebsstelle,attr"`
 					Stellwerk          string `xml:"Stellwerk,attr"`
