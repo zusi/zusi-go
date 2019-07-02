@@ -31,6 +31,8 @@ func readMessageAckHelloMessage(reader io.Reader) (*message.AckHelloMessage, err
 			msg.ZusiVerbindungsinfo, err = ReadString(reader, length)
 		case 0x0003:
 			msg.ErrorCode, err = ReadUint8(reader, length)
+		case 0x0004:
+			msg.FahrplanStartZeit, err = ReadFloat64(reader, length)
 		default:
 			fmt.Printf("unknown field %v with len %v", attribute, length)
 			_, err = ReadString(reader, length)
@@ -686,6 +688,384 @@ func readFahrpultEmptyNode(reader io.Reader) (*fahrpult.EmptyNode, error) {
 	}
 }
 
+func readFahrpultEtcsBetriebsdaten(reader io.Reader) (*fahrpult.EtcsBetriebsdaten, error) {
+	msg := fahrpult.EtcsBetriebsdaten{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.AktivesLevel, err = ReadUint16(reader, length)
+		case 0x0002:
+			msg.AktiverModus, err = ReadUint16(reader, length)
+		case 0x0003:
+			msg.BremsungsGrund, err = ReadUint16(reader, length)
+		case 0x0004:
+			msg.BremsungsGrundString, err = ReadString(reader, length)
+		case 0x0005:
+			msg.StmInfo, err = readFahrpultEtcsStmInfo(reader)
+		case 0x0006:
+			msg.LevelAnkuendigung, err = readFahrpultEtcsLevelAnkuendigung(reader)
+		case 0x0007:
+			msg.ModusAnkuendigung, err = readFahrpultEtcsModusAnkuendigung(reader)
+		case 0x0008:
+			msg.Funkstatus, err = readFahrpultEtcsFunkstatus(reader)
+		case 0x0009:
+			msg.Zielgeschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x000A:
+			msg.Zielweg, err = ReadFloat32(reader, length)
+		case 0x000B:
+			msg.AbstandBremseinsatzpunkt, err = ReadFloat32(reader, length)
+		case 0x000C:
+			msg.Entlassungsgeschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x000D:
+			msg.Sollgeschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x000E:
+			msg.Warngeschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x000F:
+			msg.Bremsgeschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x0010:
+			msg.Zwangsbremsgeschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x0011:
+			msg.BremskurveLaeuft, err = ReadUint8(reader, length)
+		case 0x0012:
+			v, er := readFahrpultEtcsVorschaupunkt(reader)
+			msg.Vorschaupunkte = append(msg.Vorschaupunkte, *v)
+			err = er
+		case 0x0013:
+			msg.OverrideAktiv, err = ReadUint8(reader, length)
+		case 0x0014:
+			msg.NotrufStatus, err = ReadUint8(reader, length)
+		case 0x0015:
+			msg.Betriebszwangsbremsung, err = ReadUint8(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsEinstellungen(reader io.Reader) (*fahrpult.EtcsEinstellungen, error) {
+	msg := fahrpult.EtcsEinstellungen{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.Zustand, err = ReadUint8(reader, length)
+		case 0x0002:
+			v, er := readFahrpultEtcsStm(reader)
+			msg.Stm = append(msg.Stm, *v)
+			err = er
+		case 0x0003:
+			msg.Zugdaten, err = readFahrpultEtcsZugdaten(reader)
+		case 0x0004:
+			msg.Spec, err = readFahrpultEtcsSpec(reader)
+		case 0x0005:
+			msg.EtcsStoerschalter, err = ReadUint8(reader, length)
+		case 0x0006:
+			msg.EtcsHauptschalter, err = ReadUint8(reader, length)
+		case 0x0007:
+			msg.Luftabsperrhahn, err = ReadUint8(reader, length)
+		case 0x0008:
+			msg.EtcsQuittierschalter, err = ReadUint8(reader, length)
+		case 0x0009:
+			msg.OverrideAnforderung, err = ReadUint8(reader, length)
+		case 0x000A:
+			msg.Start, err = ReadUint8(reader, length)
+		case 0x000B:
+			msg.LevelEinstellenAnfordern, err = ReadUint8(reader, length)
+		case 0x000C:
+			msg.StmSelectedIndex, err = ReadUint16(reader, length)
+		case 0x000D:
+			msg.ModusEinstellenAnfordern, err = ReadUint16(reader, length)
+		case 0x000E:
+			msg.TafModus, err = ReadUint8(reader, length)
+		case 0x000F:
+			msg.Zugneustart, err = ReadUint8(reader, length)
+		case 0x0010:
+			msg.InfoTonAbspielen, err = ReadUint8(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsFunkstatus(reader io.Reader) (*fahrpult.EtcsFunkstatus, error) {
+	msg := fahrpult.EtcsFunkstatus{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.Zustand, err = ReadUint8(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsLevelAnkuendigung(reader io.Reader) (*fahrpult.EtcsLevelAnkuendigung, error) {
+	msg := fahrpult.EtcsLevelAnkuendigung{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.NeuesLevel, err = ReadUint16(reader, length)
+		case 0x0002:
+			msg.Quittierung, err = ReadUint8(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsModusAnkuendigung(reader io.Reader) (*fahrpult.EtcsModusAnkuendigung, error) {
+	msg := fahrpult.EtcsModusAnkuendigung{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.NeuerModus, err = ReadUint16(reader, length)
+		case 0x0002:
+			msg.Quittierung, err = ReadUint8(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsSpec(reader io.Reader) (*fahrpult.EtcsSpec, error) {
+	msg := fahrpult.EtcsSpec{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.Reibwert, err = ReadUint8(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsStm(reader io.Reader) (*fahrpult.EtcsStm, error) {
+	msg := fahrpult.EtcsStm{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.StmIndex, err = ReadUint16(reader, length)
+		case 0x0002:
+			msg.StmName, err = ReadString(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsStmInfo(reader io.Reader) (*fahrpult.EtcsStmInfo, error) {
+	msg := fahrpult.EtcsStmInfo{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.StmIndex, err = ReadUint16(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsVorschaupunkt(reader io.Reader) (*fahrpult.EtcsVorschaupunkt, error) {
+	msg := fahrpult.EtcsVorschaupunkt{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.Herkunft, err = ReadUint16(reader, length)
+		case 0x0002:
+			msg.Geschwindigkeit, err = ReadFloat32(reader, length)
+		case 0x0003:
+			msg.Abstand, err = ReadFloat32(reader, length)
+		case 0x0004:
+			msg.Hoehenwert, err = ReadFloat32(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
+func readFahrpultEtcsZugdaten(reader io.Reader) (*fahrpult.EtcsZugdaten, error) {
+	msg := fahrpult.EtcsZugdaten{}
+
+	for {
+		length, attribute, err := ReadHeader(reader)
+		if length == 0xFFFFFFFF {
+			return &msg, nil
+		}
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+
+		length = length - 2
+
+		switch attribute {
+		case 0x0001:
+			msg.Bremshundertstel, err = ReadUint16(reader, length)
+		case 0x0002:
+			msg.Zugkategorie, err = ReadUint16(reader, length)
+		case 0x0003:
+			msg.Zuglaenge, err = ReadUint16(reader, length)
+		case 0x0004:
+			msg.Hoechstgeschwindigkeit, err = ReadUint16(reader, length)
+		case 0x0005:
+			msg.Achslast, err = ReadUint16(reader, length)
+		case 0x0006:
+			msg.Zugnummer, err = ReadUint16(reader, length)
+		case 0x0007:
+			msg.TfNummer, err = ReadUint16(reader, length)
+		default:
+			fmt.Printf("unknown field %v with len %v", attribute, length)
+			_, err = ReadString(reader, length)
+		}
+
+		if err != nil && errors.Cause(err) == io.EOF {
+			return &msg, err
+		}
+	}
+}
+
 func readFahrpultFahrpultMessage(reader io.Reader) (*fahrpult.FahrpultMessage, error) {
 	msg := fahrpult.FahrpultMessage{}
 
@@ -1255,6 +1635,12 @@ func readFahrpultStatusFahrzeug(reader io.Reader) (*fahrpult.StatusFahrzeug, err
 			msg.StatusFahrschalter, err = ReadUint8(reader, length)
 		case 0x0004:
 			msg.StatusDynamischeBremse, err = ReadUint8(reader, length)
+		case 0x0006:
+			msg.StatusSander, err = ReadUint8(reader, length)
+		case 0x0007:
+			msg.StatusBremsprobe, err = ReadUint8(reader, length)
+		case 0x0008:
+			msg.StellungRichtungsschalter, err = ReadUint8(reader, length)
 		default:
 			fmt.Printf("unknown field %v with len %v", attribute, length)
 			_, err = ReadString(reader, length)
@@ -1453,6 +1839,10 @@ func readFahrpultStatusZugbeeinflussung(reader io.Reader) (*fahrpult.StatusZugbe
 			msg.IndusiEinstellungen, err = readFahrpultIndusiEinstellungen(reader)
 		case 0x0003:
 			msg.IndusiZustand, err = readFahrpultIndusiZustand(reader)
+		case 0x0004:
+			msg.EtcsEinstellungen, err = readFahrpultEtcsEinstellungen(reader)
+		case 0x0005:
+			msg.EtcsBetriebsdaten, err = readFahrpultEtcsBetriebsdaten(reader)
 		case 0x0006:
 			msg.ZubEinstellungen, err = readFahrpultZubEinstellungen(reader)
 		case 0x0007:
@@ -1671,6 +2061,8 @@ func readFahrpultZugdaten(reader io.Reader) (*fahrpult.Zugdaten, error) {
 			msg.Zugart, err = ReadUint8(reader, length)
 		case 0x0006:
 			msg.Modus, err = ReadUint8(reader, length)
+		case 0x000B:
+			msg.Klartextmeldungen, err = ReadUint8(reader, length)
 		default:
 			fmt.Printf("unknown field %v with len %v", attribute, length)
 			_, err = ReadString(reader, length)

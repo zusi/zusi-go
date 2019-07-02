@@ -211,6 +211,8 @@ type StatusZugbeeinflussung struct {
 	Bauart              *string              `zusi:"0001" json:"bauart,omitempty"`
 	IndusiEinstellungen *IndusiEinstellungen `zusi:"0002" json:"indusi_einstellungen,omitempty"`
 	IndusiZustand       *IndusiZustand       `zusi:"0003" json:"indusi_zustand,omitempty"`
+	EtcsEinstellungen   *EtcsEinstellungen   `zusi:"0004" json:"etcs_einstellungen,omitempty"`
+	EtcsBetriebsdaten   *EtcsBetriebsdaten   `zusi:"0005" json:"etcs_betriebsdaten,omitempty"`
 	ZubEinstellungen    *ZubEinstellungen    `zusi:"0006" json:"zub_einstellungen,omitempty"`
 	ZubBetriebsdaten    *ZubBetriebsdaten    `zusi:"0007" json:"zub_betriebsdaten,omitempty"`
 }
@@ -230,12 +232,13 @@ type IndusiEinstellungen struct {
 }
 
 type Zugdaten struct {
-	Bremshundertstel *uint16 `zusi:"0001" json:"bremshundertstel,omitempty"`
-	Bremsart         *uint16 `zusi:"0002" json:"bremsart,omitempty"`
-	Zuglaenge        *uint16 `zusi:"0003" json:"zuglaenge,omitempty"` // LZB
-	Vmax             *uint16 `zusi:"0004" json:"vmax,omitempty"`      // LZB in km/h
-	Zugart           *byte   `zusi:"0005" json:"zugart,omitempty"`
-	Modus            *byte   `zusi:"0006" json:"modus,omitempty"` // Nur relevant für AktiveZugdaten. 5: Ersatzzugdaten 6: Normalbetrieb
+	Bremshundertstel  *uint16 `zusi:"0001" json:"bremshundertstel,omitempty"`
+	Bremsart          *uint16 `zusi:"0002" json:"bremsart,omitempty"`
+	Zuglaenge         *uint16 `zusi:"0003" json:"zuglaenge,omitempty"` // LZB
+	Vmax              *uint16 `zusi:"0004" json:"vmax,omitempty"`      // LZB in km/h
+	Zugart            *byte   `zusi:"0005" json:"zugart,omitempty"`
+	Modus             *byte   `zusi:"0006" json:"modus,omitempty"`             // Nur relevant für AktiveZugdaten. 5: Ersatzzugdaten 6: Normalbetrieb
+	Klartextmeldungen *byte   `zusi:"000B" json:"klartextmeldungen,omitempty"` // 0: Keine Klartextmeldungen möglich 1: Keine Klartextmeldungen möglich aber nicht aktiv 2: Klartextmeldungen aktiv 3: nur Klartextmeldungen möglich
 }
 
 type IndusiZustand struct {
@@ -313,10 +316,118 @@ type LzbFunktionspruefung struct {
 	ZwangsbremsungAktiv         *EmptyNode `zusi:"0004" json:"zwangsbremsung_aktiv,omitempty"`
 }
 
+type EtcsEinstellungen struct {
+	Zustand                  *byte         `zusi:"0001" json:"zustand,omitempty"` // Zusi -> Client
+	Stm                      []EtcsStm     `zusi:"0002" json:"stm,omitempty"`     // Erstes STM = Aktives STM
+	Zugdaten                 *EtcsZugdaten `zusi:"0003" json:"zugdaten,omitempty"`
+	Spec                     *EtcsSpec     `zusi:"0004" json:"spec,omitempty"`
+	EtcsStoerschalter        *byte         `zusi:"0005" json:"etcs_stoerschalter,omitempty"`         // 1: ETCS Abgeschaltet 2: ETCS Eingeschaltet
+	EtcsHauptschalter        *byte         `zusi:"0006" json:"etcs_hauptschalter,omitempty"`         // 1: ETCS Abgeschaltet 2: ETCS Eingeschaltet
+	Luftabsperrhahn          *byte         `zusi:"0007" json:"luftabsperrhahn,omitempty"`            // 1: Abgesperrt 2: Offen
+	EtcsQuittierschalter     *byte         `zusi:"0008" json:"etcs_quittierschalter,omitempty"`      // 1: verlegt 2: grundstellung
+	OverrideAnforderung      *byte         `zusi:"0009" json:"override_anforderung,omitempty"`       // 1: Override angefordert 2: Grundstellung
+	Start                    *byte         `zusi:"000A" json:"start,omitempty"`                      // Nur Client -> Zusi : 1: Startkommando 2: Grundstellung
+	LevelEinstellenAnfordern *byte         `zusi:"000B" json:"level_einstellen_anfordern,omitempty"` // Client -> Zusi: ETCS-Level (STM, 0, 1, usw.)
+	StmSelectedIndex         *uint16       `zusi:"000C" json:"stm_selected_index,omitempty"`         // Client -> Zusi
+	ModusEinstellenAnfordern *uint16       `zusi:"000D" json:"modus_einstellen_anfordern,omitempty"` // Client -> Zusi
+	TafModus                 *byte         `zusi:"000E" json:"taf_modus,omitempty"`                  // Client -> Zusi 1: TAF Quittiert 2: Grundstellung 3: TAF Abgelehnt
+	Zugneustart              *byte         `zusi:"000F" json:"zugneustart,omitempty"`                // Zusi -> Client 1: Zug wurde neu gestartet bzw. neu uebernommen.
+	InfoTonAbspielen         *byte         `zusi:"0010" json:"info_ton,omitempty"`                   // Client -> Zusi: 1: Zusi soll den Info-Ton 1x abspielen
+}
+
+type EtcsStm struct {
+	StmIndex *uint16 `zusi:"0001" json:"stm_index,omitempty"`
+	StmName  *string `zusi:"0002" json:"stm_name,omitempty"`
+}
+
+type EtcsZugdaten struct {
+	Bremshundertstel       *uint16 `zusi:"0001" json:"bremshundertstel,omitempty"` // in %
+	Zugkategorie           *uint16 `zusi:"0002" json:"zugkategorie,omitempty"`
+	Zuglaenge              *uint16 `zusi:"0003" json:"zuglaenge,omitempty"`              // in m
+	Hoechstgeschwindigkeit *uint16 `zusi:"0004" json:"hoechstgeschwindigkeit,omitempty"` // in km/h
+	Achslast               *uint16 `zusi:"0005" json:"achslast,omitempty"`               // in kg
+	Zugnummer              *uint16 `zusi:"0006" json:"zugnummer,omitempty"`
+	TfNummer               *uint16 `zusi:"0007" json:"tf_nummer,omitempty"`
+}
+
+type EtcsSpec struct {
+	Reibwert *byte `zusi:"0001" json:"reibwert,omitempty"` // 1: vermindert 2: nicht vermindert
+}
+
+type EtcsBetriebsdaten struct {
+	AktivesLevel *uint16 `zusi:"0001" json:"aktives_level,omitempty"` // 0: Undefiniert 1: STM 2: 0 3: 1 4: 2 5: 3
+	/*
+		00: Undefiniert
+		01: FS
+		02: OS
+		03: SR
+		04: SH
+		05: UN
+		06: SL
+		07: SB
+		08: TR
+		09: PT
+		10: SF
+		11: IS
+		12: NP
+		13: NL
+		14: SE
+		15: SN
+		16: RV
+		17: LS
+		18: PS
+	*/
+	AktiverModus               *uint16                `zusi:"0002" json:"aktiver_modus,omitempty"`
+	BremsungsGrund             *uint16                `zusi:"0003" json:"bremsungs_grund,omitempty"`
+	BremsungsGrundString       *string                `zusi:"0004" json:"bremsungs_grund_string,omitempty"`
+	StmInfo                    *EtcsStmInfo           `zusi:"0005" json:"stm_info,omitempty"`
+	LevelAnkuendigung          *EtcsLevelAnkuendigung `zusi:"0006" json:"level_ankuendigung,omitempty"`
+	ModusAnkuendigung          *EtcsModusAnkuendigung `zusi:"0007" json:"modus_ankuendigung,omitempty"`
+	Funkstatus                 *EtcsFunkstatus        `zusi:"0008" json:"funkstatus,omitempty"`
+	Zielgeschwindigkeit        *float32               `zusi:"0009" json:"zielgeschwindigkeit,omitempty"`        // in m/s
+	Zielweg                    *float32               `zusi:"000A" json:"zielweg,omitempty"`                    // in m, <0 = Dunkel
+	AbstandBremseinsatzpunkt   *float32               `zusi:"000B" json:"abstand_bremseinsatzpunkt,omitempty"`  // in m
+	Entlassungsgeschwindigkeit *float32               `zusi:"000C" json:"entlassungsgeschwindigkeit,omitempty"` // in m/s
+	Sollgeschwindigkeit        *float32               `zusi:"000D" json:"sollgeschwindigkeit,omitempty"`        // in m/s
+	Warngeschwindigkeit        *float32               `zusi:"000E" json:"warngeschwindigkeit,omitempty"`        // in m/s
+	Bremsgeschwindigkeit       *float32               `zusi:"000F" json:"bremsgeschwindigkeit,omitempty"`       // in m/s
+	Zwangsbremsgeschwindigkeit *float32               `zusi:"0010" json:"zwangsbremsgeschwindigkeit,omitempty"` // in m/s
+	BremskurveLaeuft           *byte                  `zusi:"0011" json:"bremskurve_laeuft,omitempty"`          // 0: nein 1: ja
+	Vorschaupunkte             []EtcsVorschaupunkt    `zusi:"0012" json:"vorschaupunkte,omitempty"`
+	OverrideAktiv              *byte                  `zusi:"0013" json:"override_aktiv,omitempty"` // Zusi -> Client
+	NotrufStatus               *byte                  `zusi:"0014" json:"notruf_status,omitempty"`
+	Betriebszwangsbremsung     *byte                  `zusi:"0015" json:"betriebszwangsbremsung,omitempty"`
+}
+
+type EtcsStmInfo struct {
+	StmIndex *uint16 `zusi:"0001" json:"stm_index,omitempty"` // Index des aktiven STM-System, von 1 beginnend gemäß Reihenfolge in der ftd-Datei
+}
+
+type EtcsLevelAnkuendigung struct {
+	NeuesLevel  *uint16 `zusi:"0001" json:"neues_level,omitempty"`
+	Quittierung *byte   `zusi:"0002" json:"quittierung,omitempty"`
+}
+
+type EtcsModusAnkuendigung struct {
+	NeuerModus  *uint16 `zusi:"0001" json:"neuer_modus,omitempty"`
+	Quittierung *byte   `zusi:"0002" json:"quittierung,omitempty"`
+}
+
+type EtcsFunkstatus struct {
+	Zustand *byte `zusi:"0001" json:"zustand,omitempty"`
+}
+
+type EtcsVorschaupunkt struct {
+	Herkunft        *uint16  `zusi:"0001" json:"herkunft,omitempty"`        // 1: Strecke 3: Hauptsignal 9: Rangiersignal 14: ETCS
+	Geschwindigkeit *float32 `zusi:"0002" json:"geschwindigkeit,omitempty"` // in m/s, -1 = ETCS Ende
+	Abstand         *float32 `zusi:"0003" json:"abstand,omitempty"`         // in m
+	Hoehenwert      *float32 `zusi:"0004" json:"hoehenwert,omitempty"`      // in m
+}
+
 type ZubEinstellungen struct {
-	BrhWert   *uint16 `zusi:"0001"`
-	Zuglaenge *uint16 `zusi:"0003"`
-	Vmax      *uint16 `zusi:"0004"` // in km/h
+	BrhWert   *uint16 `zusi:"0001" json:"brh_wert,omitempty"`
+	Zuglaenge *uint16 `zusi:"0003" json:"zuglaenge,omitempty"`
+	Vmax      *uint16 `zusi:"0004" json:"vmax,omitempty"` // in km/h
 }
 
 type ZubBetriebsdaten struct {
@@ -357,10 +468,13 @@ type StatusTuersystem struct {
 
 // 5.3.3.3.6
 type StatusFahrzeug struct {
-	GrundNullstellungszwang *uint16 `zusi:"0001" json:"grund_nullstellungszwang,omitempty"` // 0: nichts 1: niedriger HLL druck 2: dynamische Bremse 3: traktionssperre
-	GrundTraktionssperre    *uint16 `zusi:"0002" json:"grund_traktionssperre,omitempty"`    // 0: nichts 1: Federspeichenbremse 2: Türsystem 3: Bremsprobe läuft
-	StatusFahrschalter      *byte   `zusi:"0003" json:"status_fahrschalter,omitempty"`      // 1: deaktivert 2: normalzustand 3: gestört
-	StatusDynamischeBremse  *byte   `zusi:"0004" json:"status_dynamische_bremse,omitempty"` // 1: deaktivert 2: normalzustand
+	GrundNullstellungszwang   *uint16 `zusi:"0001" json:"grund_nullstellungszwang,omitempty"` // 0: nichts 1: niedriger HLL druck 2: dynamische Bremse 3: traktionssperre
+	GrundTraktionssperre      *uint16 `zusi:"0002" json:"grund_traktionssperre,omitempty"`    // 0: nichts 1: Federspeichenbremse 2: Türsystem 3: Bremsprobe läuft
+	StatusFahrschalter        *byte   `zusi:"0003" json:"status_fahrschalter,omitempty"`      // 1: deaktivert 2: normalzustand 3: gestört
+	StatusDynamischeBremse    *byte   `zusi:"0004" json:"status_dynamische_bremse,omitempty"` // 1: deaktivert 2: normalzustand
+	StatusSander              *byte   `zusi:"0006" json:"status_sander,omitempty"`
+	StatusBremsprobe          *byte   `zusi:"0007" json:"status_bremsprobe,omitempty"`
+	StellungRichtungsschalter *byte   `zusi:"0008" json:"stellung_richtungsschalter,omitempty"`
 }
 
 // 5.3.3.3.7

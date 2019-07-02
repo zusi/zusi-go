@@ -75,6 +75,9 @@ var beispiel2bytes = []byte{
 	0x03, 0x00, 0x00, 0x00, // Länge 3 Bytes → es folgt ein Attribut
 	0x03, 0x00, // ID x0003: Ergebnis
 	0x00,                   // 0 (Byte) -> Verbindung akzeptiert
+	0x0A, 0x00, 0x00, 0x00, // Länge 10 Bytes → es folgt ein Attribut
+	0x04, 0x00, // ID x0004: Fahrplananfangszeit
+	0x00, 0x00, 0x00, 0x00, 0xD0, 0x35, 0xE4, 0x40, // 41390,5 (double) -> Anfangszeit in Tagen
 	0xFF, 0xFF, 0xFF, 0xFF, // Ende Knoten
 	0xFF, 0xFF, 0xFF, 0xFF, // Ende Knoten
 }
@@ -84,6 +87,7 @@ var beispiel2msg = message.Message{Verbindungsaufbau: &message.Verbindungsaufbau
 		ZusiVersion:         String("3.0.1.0"),
 		ZusiVerbindungsinfo: String("0"),
 		ErrorCode:           Byte(0),
+		FahrplanStartZeit:   Float64(41390.5),
 	},
 }}
 

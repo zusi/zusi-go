@@ -39,9 +39,10 @@ type HelloMessage struct {
 
 // 5.3.2.2 Befehl 00 02 - ACK_HELLO (Zusi → Client)
 type AckHelloMessage struct {
-	ZusiVersion         *string `zusi:"0001" json:"zusi_version,omitempty"`
-	ZusiVerbindungsinfo *string `zusi:"0002" json:"zusi_verbindungsinfo,omitempty"`
-	ErrorCode           *byte   `zusi:"0003" json:"error_code,omitempty"` // Der Client wurde akzeptiert, wenn das Byte auf 00 steht. Wird der Client nicht akzeptiert, wird stattdes- sen ein anderes Byte gesendet. Der Server bricht dar- aufhin die Verbindung ab.
+	ZusiVersion         *string  `zusi:"0001" json:"zusi_version,omitempty"`
+	ZusiVerbindungsinfo *string  `zusi:"0002" json:"zusi_verbindungsinfo,omitempty"`
+	ErrorCode           *byte    `zusi:"0003" json:"error_code,omitempty"` // Der Client wurde akzeptiert, wenn das Byte auf 00 steht. Wird der Client nicht akzeptiert, wird stattdes- sen ein anderes Byte gesendet. Der Server bricht dar- aufhin die Verbindung ab.
+	FahrplanStartZeit   *float64 `zusi:"0004"`                             // Startdatum und -zeit des geladenen Fahrplans in Tagen seit 30.12.1899. Ist kein Fahrplan geladen, wird 0 geschickt
 }
 
 type IsToplevel interface {
