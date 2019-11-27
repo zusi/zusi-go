@@ -3,7 +3,7 @@ module github.com/zusi/zusi-go
 go 1.13
 
 require (
-	github.com/dave/jennifer v1.3.0
+	github.com/dave/jennifer v1.4.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/pkg/errors v0.8.1
