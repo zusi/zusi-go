@@ -7,41 +7,51 @@ on:
     branches: [ main ]
 
 jobs:
-
-  build:
-    name: Build
+  go-test:
+    name: "Test"
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+      - name: Go Build
+        run: go build -v ./...
+      - name: Go Test
+        run: go test -v -cover -race ./...
+      - name: Go Benchmark
+        run: go test -v -bench=. -benchmem ./...
 
-    - name: Set up Go 1.x
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.18
-      id: go
+  go-generate:
+    name: "Check fmt & generate"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+      - run: go install -v golang.org/x/tools/cmd/stringer@latest
+      - name: "go fmt"
+        run: go fmt ./...
+      - name: "go generate"
+        run: go generate -v ./...
+      - name: "Zusi TCPgen"
+        run: go run -v cmd/zusi-tcpgen/main.go
+      - name: "Check if Generated Code is up to date"
+        run: git diff --exit-code
 
-    - uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cache/go-build
-          ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
-
-    - name: Install stringer
-      run: go install golang.org/x/tools/cmd/stringer@latest
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-
-    - name: Generate client code
-      run: go generate ./...
-
-    - name: Run TCPgen
-      run: go run -v cmd/zusi-tcpgen/main.go
-
-    - name: Test
-      run: go test -v -bench=. -cover -benchmem -race ./...
-
-    - name: Build TestClient
-      run: go build -v cmd/zusi-testclient/main.go
+  go-lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+          cache: false
+      - run: sudo chmod -R +w ../../../go/
+      - name: golangci-lint
+        continue-on-error: true
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
