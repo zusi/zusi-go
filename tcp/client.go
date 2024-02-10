@@ -3,11 +3,11 @@ package tcp
 import (
 	"bufio"
 	"io"
+	"log/slog"
 	"net"
 	"time"
 
 	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp/message"
 )
 
@@ -90,19 +90,15 @@ func (c *Client) handshake(reader io.Reader, typ message.ClientTyp) error {
 
 	msg, err := Read(reader)
 	if err != nil {
-		log.WithError(err).
-			Error("Error unmarshalling initial message")
+		slog.With("err", err).Error("Error unmarshalling initial message")
 		return errors.Wrap(err, "unmarshaling initial message failed")
 	}
 	if msg.Verbindungsaufbau == nil || msg.Verbindungsaufbau.AckHello == nil {
-		log.WithField("message", msg).
-			Error("Initial message is not of type Verbindungsaufbau.AckHello")
+		slog.With("message", msg).Error("Initial message is not of type Verbindungsaufbau.AckHello")
 		return errors.New("Initial message is not of type Verbindungsaufbau.AckHello")
 	}
 	if *msg.Verbindungsaufbau.AckHello.ErrorCode != 0 {
-		log.WithField("message", msg).
-			WithField("errorcode", msg.Verbindungsaufbau.AckHello.ErrorCode).
-			Error("ErrorCode of initial message != 0")
+		slog.With("message", msg, "errorCode", msg.Verbindungsaufbau.AckHello.ErrorCode).Error("ErrorCode of initial message != 0")
 		return errors.New("ErrorCode of initial message != 0")
 	}
 
@@ -142,17 +138,13 @@ func (c *Client) read(reader io.Reader) {
 func (c *Client) Send(message message.Message) error {
 	bts, err := MarshalMessage(message)
 	if err != nil {
-		log.WithError(err).
-			WithField("message", message).
-			Warn("Error marshalling message")
+		slog.With("err", err, "message", message).Warn("Error marshalling message")
 		return err
 	}
 
 	_, err = c.conn.Write(bts)
 	if err != nil {
-		log.WithError(err).
-			WithField("message", message).
-			Warn("Error writing message to stream")
+		slog.With("err", err, "message", message).Warn("Error writing message to stream")
 		return err
 	}
 

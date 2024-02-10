@@ -2,10 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"log/slog"
+	"os"
 	"reflect"
 	"sort"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp/gen"
 	"github.com/zusi/zusi-go/tcp/message"
 )
@@ -13,8 +15,18 @@ import (
 var rootPath = flag.String("root", "", "root path of repository")
 
 func main() {
+	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}))
+	slog.SetDefault(logger)
+
 	flag.Parse()
 
+	if err := mainErr(); err != nil {
+		slog.With("err", err).Error("running tcpgen failed")
+		os.Exit(1)
+	}
+}
+
+func mainErr() error {
 	root := message.Message{}
 
 	res := gen.FindStructsToReflect(root)
@@ -23,7 +35,7 @@ func main() {
 	for _, v := range res {
 		msg, err := gen.Reflect(reflect.New(v.Elem()).Interface())
 		if err != nil {
-			log.WithError(err).WithField("f", v).Error()
+			return fmt.Errorf("reflecting struct '%s' failed: %w", v.Name(), err)
 		}
 
 		messages = append(messages, *msg)
@@ -33,8 +45,10 @@ func main() {
 
 	err := gen.WriteFile(messages, *rootPath)
 	if err != nil {
-		log.WithError(err).Error()
+		return err
 	}
+
+	return nil
 }
 
 type Messages []gen.Message

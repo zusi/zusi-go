@@ -4,12 +4,11 @@ import (
 	"bytes"
 	"go/format"
 	"io"
+	"log/slog"
 	"os"
 	"path"
 	"strings"
 	"text/template"
-
-	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -87,7 +86,7 @@ func WriteFile(messages []Message, rootPath string) error {
 		return err
 	}
 
-	log.WithField("filename", fileName).Info("successfully wrote file")
+	slog.With("filename", fileName).Info("successfully wrote file")
 
 	return nil
 }
