@@ -1,8 +1,8 @@
 package files
 
 import (
+	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -12,20 +12,19 @@ import (
 
 func Read(root, filename string) ([]byte, error) {
 	filename = strings.ReplaceAll(filename, "\\", string(os.PathSeparator))
-	bts, err := ioutil.ReadFile(filepath.Join(root, filename))
+	bts, err := os.ReadFile(filepath.Join(root, filename))
 	if err != nil {
 		// filenames in Zusi are case-insensitive, so if we are running on a case-sensitive system we have to search for that file
-		if e, ok := err.(*os.PathError); ok && e.Err == syscall.ENOENT && runtime.GOOS != "windows" {
+		var e *os.PathError
+		if errors.As(err, &e) && errors.Is(e.Err, syscall.ENOENT) && runtime.GOOS != "windows" {
 			filename, err = findFile(root, filename)
 			if err != nil {
 				return nil, fmt.Errorf("could not find file with case-insensitive search: %w", err)
 			}
-			bts, err = ioutil.ReadFile(filepath.Join(root, filename))
+			bts, err = os.ReadFile(filepath.Join(root, filename))
 			if err != nil {
 				return nil, fmt.Errorf("error loading file: %w", err)
 			}
-		} else {
-			return nil, fmt.Errorf("error loading file: %w", err)
 		}
 	}
 
@@ -41,7 +40,7 @@ func findFile(root, filename string) (string, error) {
 	path := strings.Split(filename, string(filepath.Separator))
 
 	for i := 0; i < len(path); i++ {
-		dir, err := ioutil.ReadDir(filepath.Join(root, resolvedPath))
+		dir, err := os.ReadDir(filepath.Join(root, resolvedPath))
 		if err != nil {
 			return "", fmt.Errorf("error loading directory: %w", err)
 		}

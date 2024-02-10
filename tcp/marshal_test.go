@@ -90,31 +90,31 @@ func testReflectionAssertLength(t *testing.T, value interface{}, expectedLength 
 
 func BenchmarkEncapsulateUint32(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		encapsulate(0x0002, reflect.ValueOf(uint32(i%500)))
+		_, _ = encapsulate(0x0002, reflect.ValueOf(uint32(i%500)))
 	}
 }
 
 func BenchmarkEncapsulateInt32(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		encapsulate(0x0002, reflect.ValueOf(int32(i%500)))
+		_, _ = encapsulate(0x0002, reflect.ValueOf(int32(i%500)))
 	}
 }
 
 func BenchmarkEncapsulateInt64(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		encapsulate(0x0002, reflect.ValueOf(int64(i%500)))
+		_, _ = encapsulate(0x0002, reflect.ValueOf(int64(i%500)))
 	}
 }
 
 func BenchmarkEncapsulateFloat64(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		encapsulate(0x0002, reflect.ValueOf(float64(i%500)))
+		_, _ = encapsulate(0x0002, reflect.ValueOf(float64(i%500)))
 	}
 }
 
 func BenchmarkEncapsulateString(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		encapsulate(0x0002, reflect.ValueOf(strconv.Itoa(i)))
+		_, _ = encapsulate(0x0002, reflect.ValueOf(strconv.Itoa(i)))
 	}
 }
 

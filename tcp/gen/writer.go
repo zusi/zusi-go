@@ -9,6 +9,7 @@ import (
 	"path"
 	"strings"
 	"text/template"
+	"unicode"
 )
 
 const (
@@ -19,9 +20,21 @@ const (
 	PkgErrs    = "errors"
 )
 
+func Title(s string) string {
+	if len(s) == 0 {
+		return ""
+	}
+
+	var output []rune
+	output = append(output, unicode.ToUpper(rune(s[0])))
+	output = append(output, []rune(s[1:])...)
+
+	return string(output)
+}
+
 func Generate(msg Message, writer io.Writer) error {
 	t := template.New("").Funcs(template.FuncMap{
-		"title": strings.Title,
+		"title": Title,
 		"pkg": func(m string) string {
 			pkgs := strings.Split(m, "/")
 
@@ -63,6 +76,9 @@ func generateHeader(msgs []Message, writer io.Writer) error {
 func WriteFile(messages []Message, rootPath string) error {
 	outBuffer := &bytes.Buffer{}
 	err := GenerateReaderFile(messages, outBuffer)
+	if err != nil {
+		return err
+	}
 
 	result, err := format.Source(outBuffer.Bytes())
 	if err != nil {

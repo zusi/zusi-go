@@ -4,6 +4,8 @@ import (
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestWrite(t *testing.T) {
@@ -18,5 +20,6 @@ func TestWrite(t *testing.T) {
 		},
 	}
 
-	Generate(msg, os.Stdout)
+	err := Generate(msg, os.Stdout)
+	assert.NoError(t, err)
 }
