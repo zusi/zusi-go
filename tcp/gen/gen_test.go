@@ -2,9 +2,10 @@ package gen
 
 import (
 	"bytes"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/zusi/zusi-go/tcp/message/fahrpult"
-	"testing"
 )
 
 func TestIntegration(t *testing.T) {

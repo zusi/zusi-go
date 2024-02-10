@@ -2,6 +2,7 @@ package st3
 
 import (
 	"encoding/xml"
+
 	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/files"
 )

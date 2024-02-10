@@ -2,11 +2,12 @@ package main
 
 import (
 	"flag"
+	"reflect"
+	"sort"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp/gen"
 	"github.com/zusi/zusi-go/tcp/message"
-	"reflect"
-	"sort"
 )
 
 var rootPath = flag.String("root", "", "root path of repository")

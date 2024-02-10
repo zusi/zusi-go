@@ -1,11 +1,12 @@
 package tcp
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/zusi/zusi-go/tcp/message"
 	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/zusi/zusi-go/tcp/message"
 )
 
 func TestMarshal(t *testing.T) {

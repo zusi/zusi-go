@@ -2,13 +2,14 @@ package gen
 
 import (
 	"bytes"
-	log "github.com/sirupsen/logrus"
 	"go/format"
 	"io"
 	"os"
 	"path"
 	"strings"
 	"text/template"
+
+	log "github.com/sirupsen/logrus"
 )
 
 const (

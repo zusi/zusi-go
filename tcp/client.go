@@ -2,12 +2,13 @@ package tcp
 
 import (
 	"bufio"
-	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
-	"github.com/zusi/zusi-go/tcp/message"
 	"io"
 	"net"
 	"time"
+
+	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
+	"github.com/zusi/zusi-go/tcp/message"
 )
 
 type Client struct {

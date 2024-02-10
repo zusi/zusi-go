@@ -2,13 +2,14 @@ package main
 
 import (
 	"flag"
+	"io"
+	"os"
+	"os/signal"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/zusi/zusi-go/tcp"
 	"github.com/zusi/zusi-go/tcp/fahrpult"
 	msg "github.com/zusi/zusi-go/tcp/message/fahrpult"
-	"io"
-	"os"
-	"os/signal"
 )
 
 func init() {
