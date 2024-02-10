@@ -2,9 +2,10 @@ package tcp
 
 import (
 	"encoding/binary"
-	"github.com/pkg/errors"
 	"io"
 	"math"
+
+	"github.com/pkg/errors"
 )
 
 func ReadHeader(bytes io.Reader) (uint32, uint16, error) {

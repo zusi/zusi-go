@@ -2,9 +2,10 @@ package gen
 
 import (
 	"fmt"
-	. "github.com/dave/jennifer/jen"
 	"reflect"
 	"strings"
+
+	. "github.com/dave/jennifer/jen"
 )
 
 type types struct {

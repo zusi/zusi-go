@@ -4,9 +4,10 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
-	log "github.com/sirupsen/logrus"
 	"path"
 	"reflect"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Message struct {

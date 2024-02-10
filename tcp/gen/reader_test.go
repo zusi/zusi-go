@@ -1,10 +1,11 @@
 package gen
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/zusi/zusi-go/tcp/message"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/zusi/zusi-go/tcp/message"
 )
 
 type blaStruct struct {

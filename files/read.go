@@ -1,13 +1,14 @@
 package files
 
 import (
-	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"syscall"
+
+	"github.com/pkg/errors"
 )
 
 func Read(root, filename string) ([]byte, error) {

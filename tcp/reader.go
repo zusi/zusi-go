@@ -2,9 +2,10 @@ package tcp
 
 import (
 	"fmt"
+	"io"
+
 	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/tcp/message"
-	"io"
 )
 
 func Read(reader io.Reader) (*message.Message, error) {

@@ -4,10 +4,11 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"github.com/pkg/errors"
-	"github.com/zusi/zusi-go/tcp/message"
 	"math"
 	"reflect"
+
+	"github.com/pkg/errors"
+	"github.com/zusi/zusi-go/tcp/message"
 )
 
 func MarshalMessage(message message.Message) ([]byte, error) {
