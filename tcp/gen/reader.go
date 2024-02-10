@@ -4,10 +4,9 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
+	"log/slog"
 	"path"
 	"reflect"
-
-	log "github.com/sirupsen/logrus"
 )
 
 type Message struct {
@@ -88,16 +87,14 @@ func Reflect(i interface{}) (*Message, error) {
 		msgType.Fields = append(msgType.Fields, *field)
 	}
 
-	log.WithField("type", ty).
+	slog.With("type", ty).
 		Info("Sucessfully reflected")
 
 	return &msgType, nil
 }
 
 func forField(parent reflect.Type, field reflect.StructField, value reflect.Value) (*Field, error) {
-	ctxLogger := log.
-		WithField("parent", parent.Name()).
-		WithField("field", field.Name)
+	ctxLogger := slog.With("parent", parent.Name(), "field", field.Name)
 
 	tag, ok := field.Tag.Lookup("zusi")
 	if !ok {
@@ -105,8 +102,7 @@ func forField(parent reflect.Type, field reflect.StructField, value reflect.Valu
 		return nil, nil
 	}
 
-	ctxLogger = ctxLogger.
-		WithField("tag", tag)
+	ctxLogger = ctxLogger.With("tag", tag)
 
 	bts, err := hex.DecodeString(tag)
 	if err != nil {
