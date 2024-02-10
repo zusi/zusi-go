@@ -8,7 +8,7 @@ package tcp
 import (
     "io"
     "fmt"
-    "github.com/pkg/errors"
+    "errors"
     {{- range $k, $v := .Imports}}
     "{{$k}}"{{end}}
 )
@@ -25,7 +25,7 @@ func clientTemplate() string {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -54,7 +54,7 @@ func clientTemplate() string {
 		    _, err = ReadString(reader, length)
     	}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}

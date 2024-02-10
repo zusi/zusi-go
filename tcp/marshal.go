@@ -3,11 +3,11 @@ package tcp
 import (
 	"encoding/binary"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"math"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/tcp/message"
 )
 
@@ -31,14 +31,14 @@ func Marshal(v interface{}) ([]byte, error) {
 
 		bts, err := hex.DecodeString(val)
 		if err != nil {
-			return nil, errors.Wrap(err, "unable to convert zusi annotation to valid element ID")
+			return nil, fmt.Errorf("unable to convert zusi annotation to valid element ID: %w", err)
 		}
 
 		elId := binary.BigEndian.Uint16(bts)
 
-		fieldBytes, err := encapsulate(uint16(elId), f)
+		fieldBytes, err := encapsulate(elId, f)
 		if err != nil {
-			return nil, errors.Wrap(err, fmt.Sprintf("error encapsulating attribute %v", t.Field(i).Name))
+			return nil, fmt.Errorf("error encapsulating attribute %v: %w", t.Field(i).Name, err)
 		}
 
 		bytes = append(bytes, fieldBytes...)
@@ -116,7 +116,7 @@ func encapsulate(elementId uint16, value reflect.Value) ([]byte, error) {
 			for _, val := range asSlice {
 				tile, err := encapsulate(elementId, reflect.ValueOf(val))
 				if err != nil {
-					return nil, errors.Wrap(err, "error encapsulating part of slice")
+					return nil, fmt.Errorf("error encapsulating part of slice: %w", err)
 				}
 
 				bts = append(bts, tile...)
@@ -129,14 +129,13 @@ func encapsulate(elementId uint16, value reflect.Value) ([]byte, error) {
 			for i := 0; i < value.Len(); i++ {
 				node, err := encapsulate(elementId, value.Index(i))
 				if err != nil {
-					return nil, errors.Wrap(err, "error encapsulating part of slice")
+					return nil, fmt.Errorf("error encapsulating part of slice: %w", err)
 				}
 
 				bts = append(bts, node...)
 			}
 
 			return bts, nil
-			//return nil, errors.New("slice as struct is unhandled rn.")
 		default:
 			return nil, errors.New("unhandled slice type")
 		}

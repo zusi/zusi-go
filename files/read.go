@@ -1,14 +1,13 @@
 package files
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"syscall"
-
-	"github.com/pkg/errors"
 )
 
 func Read(root, filename string) ([]byte, error) {
@@ -19,14 +18,14 @@ func Read(root, filename string) ([]byte, error) {
 		if e, ok := err.(*os.PathError); ok && e.Err == syscall.ENOENT && runtime.GOOS != "windows" {
 			filename, err = findFile(root, filename)
 			if err != nil {
-				return nil, errors.Wrap(err, "could not find file with case-insensitive search")
+				return nil, fmt.Errorf("could not find file with case-insensitive search: %w", err)
 			}
 			bts, err = ioutil.ReadFile(filepath.Join(root, filename))
 			if err != nil {
-				return nil, errors.Wrap(err, "error loading file")
+				return nil, fmt.Errorf("error loading file: %w", err)
 			}
 		} else {
-			return nil, errors.Wrap(err, "error loading file")
+			return nil, fmt.Errorf("error loading file: %w", err)
 		}
 	}
 
@@ -44,7 +43,7 @@ func findFile(root, filename string) (string, error) {
 	for i := 0; i < len(path); i++ {
 		dir, err := ioutil.ReadDir(filepath.Join(root, resolvedPath))
 		if err != nil {
-			return "", errors.Wrap(err, "error loading directory")
+			return "", fmt.Errorf("error loading directory: %w", err)
 		}
 
 		for _, entry := range dir {
