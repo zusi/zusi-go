@@ -3,11 +3,11 @@ package gen
 import (
 	"fmt"
 	"reflect"
-	"strings"
 
 	. "github.com/dave/jennifer/jen"
 )
 
+//nolint:unused
 type types struct {
 	int8
 	int16
@@ -37,7 +37,7 @@ func generateCommon() string {
 }
 
 func readBaseType(f *File, t reflect.Type) {
-	f.Func().Id("Read"+strings.Title(t.Name())).Params(Id("data").Qual("io", "Reader"), Id("length").Uint32()).Params(Op("*").Id(t.Name()), Error()).Block(
+	f.Func().Id("Read"+Title(t.Name())).Params(Id("data").Qual("io", "Reader"), Id("length").Uint32()).Params(Op("*").Id(t.Name()), Error()).Block(
 		Id("bts").Op(":=").Make(Index().Byte(), Id("length")),
 		Empty(),
 		List(Id("n"), Err()).Op(":=").Qual("io", "ReadFull").Call(Id("data"), Id("bts")),

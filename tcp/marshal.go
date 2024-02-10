@@ -140,7 +140,7 @@ func encapsulate(elementId uint16, value reflect.Value) ([]byte, error) {
 			return nil, errors.New("unhandled slice type")
 		}
 	default:
-		return nil, errors.New(fmt.Sprintf("Could not encapsulate attribute type %v into bytes.", value.Type()))
+		return nil, fmt.Errorf("could not encapsulate attribute type %v into bytes", value.Type())
 	}
 
 	binary.LittleEndian.PutUint32(bytes[0:4], uint32(len(bytes)-4))
