@@ -86,7 +86,7 @@ func WriteFile(messages []Message, rootPath string) error {
 		return err
 	}
 
-	slog.With("filename", fileName).Info("successfully wrote file")
+	slog.With("filename", fileName).Info("wrote file")
 
 	return nil
 }

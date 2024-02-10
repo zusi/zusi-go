@@ -88,7 +88,7 @@ func Reflect(i interface{}) (*Message, error) {
 	}
 
 	slog.With("type", ty).
-		Info("Sucessfully reflected")
+		Info("reflected struct")
 
 	return &msgType, nil
 }
