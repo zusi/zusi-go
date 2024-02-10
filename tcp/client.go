@@ -2,12 +2,13 @@ package tcp
 
 import (
 	"bufio"
+	"errors"
+	"fmt"
 	"io"
 	"log/slog"
 	"net"
 	"time"
 
-	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/tcp/message"
 )
 
@@ -53,7 +54,7 @@ func (c *Client) ConnectWithType(address string, typ message.ClientTyp) error {
 
 	conn, err := net.DialTimeout("tcp", address, 10*time.Second)
 	if err != nil {
-		return errors.Wrap(err, "error connecting to zusi host")
+		return fmt.Errorf("error connecting to zusi host: %w", err)
 	}
 
 	c.conn = conn
@@ -61,7 +62,7 @@ func (c *Client) ConnectWithType(address string, typ message.ClientTyp) error {
 	bufReader := bufio.NewReader(c.conn)
 	err = c.handshake(bufReader, typ)
 	if err != nil {
-		return errors.Wrap(err, "error during handshake")
+		return fmt.Errorf("error during handshake: %w", err)
 	}
 
 	c.messageChan = make(chan message.Message)
@@ -91,7 +92,7 @@ func (c *Client) handshake(reader io.Reader, typ message.ClientTyp) error {
 	msg, err := Read(reader)
 	if err != nil {
 		slog.With("err", err).Error("Error unmarshalling initial message")
-		return errors.Wrap(err, "unmarshaling initial message failed")
+		return fmt.Errorf("unmarshaling initial message failed: %w", err)
 	}
 	if msg.Verbindungsaufbau == nil || msg.Verbindungsaufbau.AckHello == nil {
 		slog.With("message", msg).Error("Initial message is not of type Verbindungsaufbau.AckHello")
@@ -111,20 +112,20 @@ func (c *Client) read(reader io.Reader) {
 	for {
 		msg, err := Read(reader)
 		if err != nil {
-			if errors.Cause(err) == io.EOF {
-				c.errorChan <- errors.Wrap(err, "remote connection died")
+			if errors.Is(err, io.EOF) {
+				c.errorChan <- fmt.Errorf("remote connection died: %w", err)
 				close(c.messageChan)
 				return
 			}
 
-			c.errorChan <- errors.Wrap(err, "error unmarshalling message. one message is lost but keep receiving")
+			c.errorChan <- fmt.Errorf("error unmarshalling message. one message is lost but keep receiving: %w", err)
 			continue
 		}
 
 		if c.messageHandler != nil {
 			keep, err := c.messageHandler(msg)
 			if err != nil {
-				c.errorChan <- errors.Wrap(err, "error handling message internally but keep receiving")
+				c.errorChan <- fmt.Errorf("error handling message internally but keep receiving: %w", err)
 			}
 			if !keep {
 				continue

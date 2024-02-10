@@ -3,8 +3,8 @@
 package tcp
 
 import (
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/tcp/message"
 	"github.com/zusi/zusi-go/tcp/message/fahrpult"
 	"io"
@@ -18,7 +18,7 @@ func readMessageAckHelloMessage(reader io.Reader) (*message.AckHelloMessage, err
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -38,7 +38,7 @@ func readMessageAckHelloMessage(reader io.Reader) (*message.AckHelloMessage, err
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -52,7 +52,7 @@ func readMessageHelloMessage(reader io.Reader) (*message.HelloMessage, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -72,7 +72,7 @@ func readMessageHelloMessage(reader io.Reader) (*message.HelloMessage, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -86,7 +86,7 @@ func readMessageMessage(reader io.Reader) (*message.Message, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -102,7 +102,7 @@ func readMessageMessage(reader io.Reader) (*message.Message, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -116,7 +116,7 @@ func readMessageVerbindungsaufbauMessage(reader io.Reader) (*message.Verbindungs
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -132,7 +132,7 @@ func readMessageVerbindungsaufbauMessage(reader io.Reader) (*message.Verbindungs
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -146,7 +146,7 @@ func readFahrpultAckNeededData(reader io.Reader) (*fahrpult.AckNeededData, error
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -160,7 +160,7 @@ func readFahrpultAckNeededData(reader io.Reader) (*fahrpult.AckNeededData, error
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -174,7 +174,7 @@ func readFahrpultControl(reader io.Reader) (*fahrpult.Control, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -210,7 +210,7 @@ func readFahrpultControl(reader io.Reader) (*fahrpult.Control, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -224,7 +224,7 @@ func readFahrpultControlFilename(reader io.Reader) (*fahrpult.ControlFilename, e
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -238,7 +238,7 @@ func readFahrpultControlFilename(reader io.Reader) (*fahrpult.ControlFilename, e
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -252,7 +252,7 @@ func readFahrpultDataFtd(reader io.Reader) (*fahrpult.DataFtd, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -556,7 +556,7 @@ func readFahrpultDataFtd(reader io.Reader) (*fahrpult.DataFtd, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -570,7 +570,7 @@ func readFahrpultDataProg(reader io.Reader) (*fahrpult.DataProg, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -590,7 +590,7 @@ func readFahrpultDataProg(reader io.Reader) (*fahrpult.DataProg, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -604,7 +604,7 @@ func readFahrpultEfzZugbeeinflussungssystem(reader io.Reader) (*fahrpult.EfzZugb
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -618,7 +618,7 @@ func readFahrpultEfzZugbeeinflussungssystem(reader io.Reader) (*fahrpult.EfzZugb
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -632,7 +632,7 @@ func readFahrpultEinzelfahrzeug(reader io.Reader) (*fahrpult.Einzelfahrzeug, err
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -656,7 +656,7 @@ func readFahrpultEinzelfahrzeug(reader io.Reader) (*fahrpult.Einzelfahrzeug, err
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -670,7 +670,7 @@ func readFahrpultEmptyNode(reader io.Reader) (*fahrpult.EmptyNode, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -682,7 +682,7 @@ func readFahrpultEmptyNode(reader io.Reader) (*fahrpult.EmptyNode, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -696,7 +696,7 @@ func readFahrpultEtcsBetriebsdaten(reader io.Reader) (*fahrpult.EtcsBetriebsdate
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -752,7 +752,7 @@ func readFahrpultEtcsBetriebsdaten(reader io.Reader) (*fahrpult.EtcsBetriebsdate
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -766,7 +766,7 @@ func readFahrpultEtcsEinstellungen(reader io.Reader) (*fahrpult.EtcsEinstellunge
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -812,7 +812,7 @@ func readFahrpultEtcsEinstellungen(reader io.Reader) (*fahrpult.EtcsEinstellunge
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -826,7 +826,7 @@ func readFahrpultEtcsFunkstatus(reader io.Reader) (*fahrpult.EtcsFunkstatus, err
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -840,7 +840,7 @@ func readFahrpultEtcsFunkstatus(reader io.Reader) (*fahrpult.EtcsFunkstatus, err
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -854,7 +854,7 @@ func readFahrpultEtcsLevelAnkuendigung(reader io.Reader) (*fahrpult.EtcsLevelAnk
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -870,7 +870,7 @@ func readFahrpultEtcsLevelAnkuendigung(reader io.Reader) (*fahrpult.EtcsLevelAnk
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -884,7 +884,7 @@ func readFahrpultEtcsModusAnkuendigung(reader io.Reader) (*fahrpult.EtcsModusAnk
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -900,7 +900,7 @@ func readFahrpultEtcsModusAnkuendigung(reader io.Reader) (*fahrpult.EtcsModusAnk
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -914,7 +914,7 @@ func readFahrpultEtcsSpec(reader io.Reader) (*fahrpult.EtcsSpec, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -928,7 +928,7 @@ func readFahrpultEtcsSpec(reader io.Reader) (*fahrpult.EtcsSpec, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -942,7 +942,7 @@ func readFahrpultEtcsStm(reader io.Reader) (*fahrpult.EtcsStm, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -958,7 +958,7 @@ func readFahrpultEtcsStm(reader io.Reader) (*fahrpult.EtcsStm, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -972,7 +972,7 @@ func readFahrpultEtcsStmInfo(reader io.Reader) (*fahrpult.EtcsStmInfo, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -986,7 +986,7 @@ func readFahrpultEtcsStmInfo(reader io.Reader) (*fahrpult.EtcsStmInfo, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1000,7 +1000,7 @@ func readFahrpultEtcsVorschaupunkt(reader io.Reader) (*fahrpult.EtcsVorschaupunk
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1020,7 +1020,7 @@ func readFahrpultEtcsVorschaupunkt(reader io.Reader) (*fahrpult.EtcsVorschaupunk
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1034,7 +1034,7 @@ func readFahrpultEtcsZugdaten(reader io.Reader) (*fahrpult.EtcsZugdaten, error) 
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1060,7 +1060,7 @@ func readFahrpultEtcsZugdaten(reader io.Reader) (*fahrpult.EtcsZugdaten, error) 
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1074,7 +1074,7 @@ func readFahrpultFahrpultMessage(reader io.Reader) (*fahrpult.FahrpultMessage, e
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1096,7 +1096,7 @@ func readFahrpultFahrpultMessage(reader io.Reader) (*fahrpult.FahrpultMessage, e
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1110,7 +1110,7 @@ func readFahrpultFuehrerstandsanzeigen(reader io.Reader) (*fahrpult.Fuehrerstand
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1126,7 +1126,7 @@ func readFahrpultFuehrerstandsanzeigen(reader io.Reader) (*fahrpult.Fuehrerstand
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1140,7 +1140,7 @@ func readFahrpultFuehrerstandsbedienung(reader io.Reader) (*fahrpult.Fuehrerstan
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1152,7 +1152,7 @@ func readFahrpultFuehrerstandsbedienung(reader io.Reader) (*fahrpult.Fuehrerstan
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1166,7 +1166,7 @@ func readFahrpultIndusiEinstellungen(reader io.Reader) (*fahrpult.IndusiEinstell
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1198,7 +1198,7 @@ func readFahrpultIndusiEinstellungen(reader io.Reader) (*fahrpult.IndusiEinstell
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1212,7 +1212,7 @@ func readFahrpultIndusiZustand(reader io.Reader) (*fahrpult.IndusiZustand, error
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1308,7 +1308,7 @@ func readFahrpultIndusiZustand(reader io.Reader) (*fahrpult.IndusiZustand, error
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1322,7 +1322,7 @@ func readFahrpultLzbAuftrag(reader io.Reader) (*fahrpult.LzbAuftrag, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1336,7 +1336,7 @@ func readFahrpultLzbAuftrag(reader io.Reader) (*fahrpult.LzbAuftrag, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1350,7 +1350,7 @@ func readFahrpultLzbElAuftrag(reader io.Reader) (*fahrpult.LzbElAuftrag, error) 
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1364,7 +1364,7 @@ func readFahrpultLzbElAuftrag(reader io.Reader) (*fahrpult.LzbElAuftrag, error) 
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1378,7 +1378,7 @@ func readFahrpultLzbFunktionspruefung(reader io.Reader) (*fahrpult.LzbFunktionsp
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1398,7 +1398,7 @@ func readFahrpultLzbFunktionspruefung(reader io.Reader) (*fahrpult.LzbFunktionsp
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1412,7 +1412,7 @@ func readFahrpultLzbNothalt(reader io.Reader) (*fahrpult.LzbNothalt, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1428,7 +1428,7 @@ func readFahrpultLzbNothalt(reader io.Reader) (*fahrpult.LzbNothalt, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1442,7 +1442,7 @@ func readFahrpultLzbRechnerausfall(reader io.Reader) (*fahrpult.LzbRechnerausfal
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1456,7 +1456,7 @@ func readFahrpultLzbRechnerausfall(reader io.Reader) (*fahrpult.LzbRechnerausfal
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1470,7 +1470,7 @@ func readFahrpultLzbUebertragungsausfall(reader io.Reader) (*fahrpult.LzbUebertr
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1488,7 +1488,7 @@ func readFahrpultLzbUebertragungsausfall(reader io.Reader) (*fahrpult.LzbUebertr
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1502,7 +1502,7 @@ func readFahrpultNeededDataMessage(reader io.Reader) (*fahrpult.NeededDataMessag
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1520,7 +1520,7 @@ func readFahrpultNeededDataMessage(reader io.Reader) (*fahrpult.NeededDataMessag
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1534,7 +1534,7 @@ func readFahrpultProgrammdaten(reader io.Reader) (*fahrpult.Programmdaten, error
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1550,7 +1550,7 @@ func readFahrpultProgrammdaten(reader io.Reader) (*fahrpult.Programmdaten, error
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1564,7 +1564,7 @@ func readFahrpultShortNode(reader io.Reader) (*fahrpult.ShortNode, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1578,7 +1578,7 @@ func readFahrpultShortNode(reader io.Reader) (*fahrpult.ShortNode, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1592,7 +1592,7 @@ func readFahrpultSingleNode(reader io.Reader) (*fahrpult.SingleNode, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1606,7 +1606,7 @@ func readFahrpultSingleNode(reader io.Reader) (*fahrpult.SingleNode, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1620,7 +1620,7 @@ func readFahrpultStatusFahrzeug(reader io.Reader) (*fahrpult.StatusFahrzeug, err
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1646,7 +1646,7 @@ func readFahrpultStatusFahrzeug(reader io.Reader) (*fahrpult.StatusFahrzeug, err
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1660,7 +1660,7 @@ func readFahrpultStatusNotbremssystem(reader io.Reader) (*fahrpult.StatusNotbrem
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1682,7 +1682,7 @@ func readFahrpultStatusNotbremssystem(reader io.Reader) (*fahrpult.StatusNotbrem
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1696,7 +1696,7 @@ func readFahrpultStatusSifa(reader io.Reader) (*fahrpult.StatusSifa, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1720,7 +1720,7 @@ func readFahrpultStatusSifa(reader io.Reader) (*fahrpult.StatusSifa, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1734,7 +1734,7 @@ func readFahrpultStatusTuersystem(reader io.Reader) (*fahrpult.StatusTuersystem,
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1782,7 +1782,7 @@ func readFahrpultStatusTuersystem(reader io.Reader) (*fahrpult.StatusTuersystem,
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1796,7 +1796,7 @@ func readFahrpultStatusWeichen(reader io.Reader) (*fahrpult.StatusWeichen, error
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1812,7 +1812,7 @@ func readFahrpultStatusWeichen(reader io.Reader) (*fahrpult.StatusWeichen, error
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1826,7 +1826,7 @@ func readFahrpultStatusZugbeeinflussung(reader io.Reader) (*fahrpult.StatusZugbe
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1852,7 +1852,7 @@ func readFahrpultStatusZugbeeinflussung(reader io.Reader) (*fahrpult.StatusZugbe
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1866,7 +1866,7 @@ func readFahrpultStatusZugverband(reader io.Reader) (*fahrpult.StatusZugverband,
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1882,7 +1882,7 @@ func readFahrpultStatusZugverband(reader io.Reader) (*fahrpult.StatusZugverband,
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1896,7 +1896,7 @@ func readFahrpultTrain(reader io.Reader) (*fahrpult.Train, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1910,7 +1910,7 @@ func readFahrpultTrain(reader io.Reader) (*fahrpult.Train, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1924,7 +1924,7 @@ func readFahrpultWeiche(reader io.Reader) (*fahrpult.Weiche, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1948,7 +1948,7 @@ func readFahrpultWeiche(reader io.Reader) (*fahrpult.Weiche, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -1962,7 +1962,7 @@ func readFahrpultZubBetriebsdaten(reader io.Reader) (*fahrpult.ZubBetriebsdaten,
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -1996,7 +1996,7 @@ func readFahrpultZubBetriebsdaten(reader io.Reader) (*fahrpult.ZubBetriebsdaten,
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -2010,7 +2010,7 @@ func readFahrpultZubEinstellungen(reader io.Reader) (*fahrpult.ZubEinstellungen,
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -2028,7 +2028,7 @@ func readFahrpultZubEinstellungen(reader io.Reader) (*fahrpult.ZubEinstellungen,
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}
@@ -2042,7 +2042,7 @@ func readFahrpultZugdaten(reader io.Reader) (*fahrpult.Zugdaten, error) {
 		if length == 0xFFFFFFFF {
 			return &msg, nil
 		}
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 
@@ -2068,7 +2068,7 @@ func readFahrpultZugdaten(reader io.Reader) (*fahrpult.Zugdaten, error) {
 			_, err = ReadString(reader, length)
 		}
 
-		if err != nil && errors.Cause(err) == io.EOF {
+		if err != nil && errors.Is(err, io.EOF) {
 			return &msg, err
 		}
 	}

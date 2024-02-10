@@ -1,10 +1,10 @@
 package tcp
 
 import (
+	"errors"
 	"fmt"
 	"io"
 
-	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/tcp/message"
 )
 
@@ -16,7 +16,7 @@ func Read(reader io.Reader) (*message.Message, error) {
 
 	msg := message.Message{}
 
-	if err != nil && errors.Cause(err) == io.EOF {
+	if err != nil && errors.Is(err, io.EOF) {
 		return &msg, err
 	}
 
@@ -30,7 +30,7 @@ func Read(reader io.Reader) (*message.Message, error) {
 		_, err = ReadString(reader, length)
 	}
 
-	if err != nil && errors.Cause(err) == io.EOF {
+	if err != nil && errors.Is(err, io.EOF) {
 		return &msg, err
 	}
 

@@ -16,7 +16,7 @@ const (
 	TcpPath    = PkgPath + "/tcp"
 	GenPath    = TcpPath + "/gen"
 	CommonPath = TcpPath + "/common"
-	PkgErrs    = "github.com/pkg/errors"
+	PkgErrs    = "errors"
 )
 
 func Generate(msg Message, writer io.Writer) error {

@@ -2,10 +2,10 @@ package tcp
 
 import (
 	"encoding/binary"
+	"errors"
+	"fmt"
 	"io"
 	"math"
-
-	"github.com/pkg/errors"
 )
 
 func ReadHeader(bytes io.Reader) (uint32, uint16, error) {
@@ -14,7 +14,7 @@ func ReadHeader(bytes io.Reader) (uint32, uint16, error) {
 
 	n, err := io.ReadFull(bytes, bts)
 	if err != nil {
-		return 0, 0, errors.Wrap(err, "error reading length of attribute")
+		return 0, 0, fmt.Errorf("error reading length of attribute: %w", err)
 	}
 	if n != 4 {
 		return 0, 0, errors.New("error reading length of attribute")
@@ -28,7 +28,7 @@ func ReadHeader(bytes io.Reader) (uint32, uint16, error) {
 	bts = make([]byte, 2)
 	n, err = io.ReadFull(bytes, bts)
 	if err != nil {
-		return 0, 0, errors.Wrap(err, "error reading attribute Id")
+		return 0, 0, fmt.Errorf("error reading attribute Id: %w", err)
 	}
 	if n != 2 {
 		return 0, 0, errors.New("error reading attribute Id")

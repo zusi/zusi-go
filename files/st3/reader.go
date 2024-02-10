@@ -2,8 +2,8 @@ package st3
 
 import (
 	"encoding/xml"
+	"fmt"
 
-	"github.com/pkg/errors"
 	"github.com/zusi/zusi-go/files"
 )
 
@@ -14,13 +14,13 @@ type Reader struct {
 func Read(root, filename string) (*Reader, error) {
 	bts, err := files.Read(root, filename)
 	if err != nil {
-		return nil, errors.Wrap(err, "error loading timetable")
+		return nil, fmt.Errorf("error loading timetable: %w", err)
 	}
 
 	var file File
 	err = xml.Unmarshal(bts, &file)
 	if err != nil {
-		return nil, errors.Wrap(err, "error unmarshalling timetable")
+		return nil, fmt.Errorf("error unmarshalling timetable: %w", err)
 	}
 
 	return &Reader{
