@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.23.1
 
 require (
-	github.com/dave/jennifer v1.7.0
+	github.com/dave/jennifer v1.7.1
 	github.com/stretchr/testify v1.9.0
 )
 
