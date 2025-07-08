@@ -2,7 +2,7 @@ module github.com/zusi/zusi-go
 
 go 1.22
 
-toolchain go1.24.2
+toolchain go1.24.5
 
 require (
 	github.com/dave/jennifer v1.7.1
