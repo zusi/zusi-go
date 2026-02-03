@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   go-test:
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v6
         with:
-          go-version-file: 'go.mod'
+          go-version-file: "go.mod"
       - name: Go Build
         run: go build -v ./...
       - name: Go Test
@@ -29,8 +29,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v6
         with:
-          go-version-file: 'go.mod'
-      - run: go install -v golang.org/x/tools/cmd/stringer@latest
+          go-version-file: "go.mod"
       - name: "go fmt"
         run: go fmt ./...
       - name: "go generate"
@@ -47,7 +46,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v6
         with:
-          go-version-file: 'go.mod'
+          go-version-file: "go.mod"
           cache: false
       - run: sudo chmod -R +w ../../../go/
       - name: golangci-lint

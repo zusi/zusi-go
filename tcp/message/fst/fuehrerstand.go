@@ -1,4 +1,4 @@
-//go:generate stringer -type FuehrerstandId fuehrerstand.go
+//go:generate go tool stringer -type FuehrerstandId fuehrerstand.go
 
 package fst
 
